@@ -1,4 +1,4 @@
-name: Ekspor data harga
+name: Ekspor data
 
 on:
   workflow_dispatch:
@@ -9,18 +9,18 @@ permissions:
 jobs:
   ekspor:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: pip
-      - run: pip install -r requirements.txt
+      - run: pip install yfinance pandas
       - run: python export_prices.py
-      - name: Simpan
+      - name: Simpan hasil
         run: |
           git config user.name "sinyal-bot"
           git config user.email "sinyal-bot@users.noreply.github.com"
-          git add -f docs/prices.zip
-          git commit -m "Ekspor data harga" || echo "Tidak ada perubahan"
+          git add docs/prices.zip
+          git commit -m "Ekspor data harga $(date -u +%F)" || echo "Tidak ada perubahan"
           git push
