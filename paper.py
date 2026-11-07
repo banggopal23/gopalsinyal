@@ -24,7 +24,7 @@ def play(df, sig_date, plan, cfg=CFG):
     if fill > plan["entry"] * 1.015 or fill <= plan["sl"]:
         return dict(status="dilewati", entry_date=str(idx[j].date()), fill=fill)
     rem, gross, sl_cur, tp1, outcome, exit_i = 1.0, 0.0, plan["sl"], False, None, None
-    last = j + cfg["valid_days"] - 1
+    last = j + int(plan.get("days", cfg["valid_days"])) - 1
     for t in range(j, min(last, len(df) - 1) + 1):
         if o[t] <= sl_cur:
             gross += rem * (o[t] / fill - 1); outcome = "TP1" if tp1 else "SL"; rem = 0; exit_i = t; break

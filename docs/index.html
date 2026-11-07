@@ -141,6 +141,18 @@ details[open] summary::after{transform:rotate(180deg)}
 .stats.s6{grid-template-columns:repeat(3,1fr)}
 .stats.s6 .stat b{font-size:19px}
 .tab[disabled]{opacity:.55;cursor:default}
+
+.chartbtn{border:1px solid var(--line,#d5dbd8);background:#fff;border-radius:10px;padding:6px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;margin-left:8px}
+.code[data-chart]{cursor:pointer;text-decoration:underline dotted;text-underline-offset:4px}
+#cm{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:10px}
+#cm[hidden]{display:none}
+#cm .box{background:#fff;border-radius:14px;width:min(1100px,100%);height:min(86vh,760px);display:flex;flex-direction:column;overflow:hidden}
+#cm .bar{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #e3e8e5;font-size:13px}
+#cm .bar b{font-size:16px}
+#cm .bar .pl{flex:1;color:#445;display:flex;gap:12px;flex-wrap:wrap}
+#cm .bar button{border:0;background:#1a4bdc;color:#fff;border-radius:8px;padding:7px 14px;font:inherit;font-weight:600;cursor:pointer}
+#tv{flex:1;min-height:0}
+#cm .tip{font-size:12px;color:#667;padding:6px 14px;border-top:1px solid #e3e8e5}
 </style>
 </head>
 <body>
@@ -161,7 +173,7 @@ details[open] summary::after{transform:rotate(180deg)}
 
   <nav class="tabs" role="tablist" aria-label="Mode">
     <button class="tab" role="tab" data-tab="santai" aria-selected="true"><span><i class="dot" style="background:var(--santai)"></i>Santai</span><small>1-4 minggu</small></button>
-    <button class="tab" role="tab" data-tab="cepat" aria-selected="false"><span><i class="dot" style="background:var(--cepat)"></i>Cepat</span><small>ditunda</small></button>
+    <button class="tab" role="tab" data-tab="arena" aria-selected="false"><span><i class="dot" style="background:var(--cepat)"></i>Arena</span><small>uji strategi</small></button>
     <button class="tab" role="tab" data-tab="riwayat" aria-selected="false"><span>Riwayat</span><small>hasil uji</small></button>
   </nav>
 
@@ -169,17 +181,24 @@ details[open] summary::after{transform:rotate(180deg)}
   <p class="status" id="status"></p>
   <main id="view" class="feed"></main>
 
-  <p class="disc">Alat bantu analisis, bukan nasihat investasi. Perdagangan saham berisiko rugi, dan hasil uji pada data masa lalu tidak menjamin hasil berikutnya. Data harian dari Yahoo Finance bisa terlambat atau keliru; cek ulang harga di aplikasi sekuritas Anda sebelum bertransaksi.</p>
+  <div id="cm" hidden role="dialog" aria-modal="true" aria-label="Chart saham">
+  <div class="box">
+    <div class="bar"><b id="cmk"></b><span class="pl" id="cmp"></span><button id="cmx">Tutup</button></div>
+    <div id="tv"></div>
+    <div class="tip">Klik <b>Indikator</b> di bagian atas chart untuk menambah EMA, RSI, ADX, volume, dll. Chart dari TradingView (gratis, data bisa tertunda). Garis Entry/SL/TP ada di bilah atas, belum digambar di chart.</div>
+  </div>
+</div>
+<p class="disc">Alat bantu analisis, bukan nasihat investasi. Perdagangan saham berisiko rugi, dan hasil uji pada data masa lalu tidak menjamin hasil berikutnya. Data harian dari Yahoo Finance bisa terlambat atau keliru; cek ulang harga di aplikasi sekuritas Anda sebelum bertransaksi.</p>
 </div>
 
 <script>
 const INTRO={
-  santai:'<b>Daftar pantau</b>: saham likuid dengan tren dan posisi harga yang sehat, lengkap dengan rencana Entry, SL, TP dan jumlah lot. <b>Bukan jaminan untung.</b> Uji pada data 4 tahun belum menunjukkan keunggulan setelah biaya, jadi pakai sebagai alat disiplin risiko, bukan sinyal pasti. Pantau hasil nyatanya di tab Riwayat → Uji maju.',
-  cepat:'<b>Mode Cepat</b>: ditunda.',
-  riwayat:'<b>Riwayat</b>: (1) Uji maju: sinyal yang dicatat sejak hari ini dan dihitung dari harga nyata, tanpa uang sungguhan. (2) Simulasi data lama, sudah dikurangi biaya.'
+  santai:'<b>Daftar pantau</b>: saham likuid dengan tren dan posisi harga yang sehat, lengkap dengan rencana Entry, SL, TP dan jumlah lot. <b>Bukan jaminan untung.</b> Uji pada data 4 tahun belum menunjukkan keunggulan setelah biaya, jadi pakai sebagai alat disiplin risiko, bukan sinyal pasti. Pantau hasil nyatanya di tab Arena.',
+  arena:'<b>Arena strategi</b>: beberapa strategi (termasuk AI) dicatat otomatis setiap hari bursa tanpa uang sungguhan, lalu dibandingkan dengan pilihan acak. Strategi baru dianggap lolos bila sudah 30+ transaksi selesai, PF di atas 1,3, rata-rata positif, dan mengalahkan acak.',
+  riwayat:'<b>Riwayat</b>: simulasi aturan Santai pada data lama, sudah dikurangi biaya. Hasil uji nyata ke depan ada di tab Arena.'
 };
 const S={modal:10000000,risk:1,tab:'santai'};
-let SIG=null,BT=null,PAPER=null,FAILED=false;
+let SIG=null,BT=null,PAPER=null,ARENA=null,FAILED=false;
 
 const nf=new Intl.NumberFormat('id-ID'),num=v=>nf.format(v);
 const pc=(a,b)=>(a-b)/b*100;
@@ -211,7 +230,7 @@ function card(s){
     : `Modal atau batas risiko terlalu kecil untuk 1 lot saham ini.`;
   return `<article class="card">
     <div class="card-h">
-      <div><span class="code">${s.k}</span><span class="name">${s.nm}</span><span class="mt santai" style="margin-top:6px">Santai</span></div>
+      <div><span class="code" data-chart="${s.k}">${s.k}</span><button class="chartbtn" data-chart="${s.k}">Chart</button><span class="name">${s.nm}</span><span class="mt santai" style="margin-top:6px">Santai</span></div>
       <div class="score"><span class="pill ${ck}">${cl}</span>
         <div class="ring" style="--p:${sc};--c:${ringColor}" role="img" aria-label="Skor ${sc} dari 100"><b>${sc}</b></div></div>
     </div>
@@ -276,7 +295,7 @@ function paperView(){
   const rows=T.map(t=>{
     const [lab,k]=t.status==='selesai'?[t.outcome,t.pct>0?'good':'bad']:st[t.status];
     const v=t.pct==null?'':`<b style="color:${tone(t.pct)}">${sgn(t.pct)}</b>`;
-    return `<div class="row"><span class="c">${t.k}</span><span class="res">${v}</span><span class="m"><span class="mt santai">Santai</span> · sinyal ${t.sig.slice(8)}/${t.sig.slice(5,7)}</span><span class="res"><span class="pill ${k}">${lab}</span></span></div>`;
+    return `<div class="row"><span class="c code" data-chart="${t.k}">${t.k}</span><span class="res">${v}</span><span class="m"><span class="mt santai">Santai</span> · sinyal ${t.sig.slice(8)}/${t.sig.slice(5,7)}</span><span class="res"><span class="pill ${k}">${lab}</span></span></div>`;
   }).join('');
   return `<div class="sect" style="margin-top:0">Uji maju (tanpa uang sungguhan)<small>Sejak ${PAPER.started||'-'} · sinyal dicatat saat muncul dan tidak bisa diubah belakangan · biaya 0,4% sudah dikurangi · ${m.n_berjalan} berjalan, ${m.n_menunggu} menunggu</small></div>
     <div class="tbl">${head}<div class="tr"><span>Hasil nyata</span><span>${m.n_selesai}</span><span>${m.win_rate==null?'–':f1(m.win_rate)+'%'}</span><span>${m.avg==null?'–':(m.avg>0?'+':'')+f2(m.avg)+'%'}</span><span>${m.pf==null?'–':f2(m.pf)}</span></div></div>
@@ -284,16 +303,40 @@ function paperView(){
     <div class="hist" style="grid-column:1/-1">${rows}</div>`;
 }
 
+function arenaView(){
+  if(!ARENA)return empty('Arena belum mulai','Pencatatan otomatis dimulai setelah pembaruan data berikutnya dijalankan di GitHub (Actions → Run workflow).');
+  const V={lolos:['LOLOS','good'],gagal:['BELUM LOLOS','bad'],data:['DATA BELUM CUKUP','warn'],pembanding:['PEMBANDING','warn']};
+  const tone=v=>v>0?'var(--good)':v<0?'var(--bad)':'var(--ink)';
+  const order=['santai','pullback','momentum','ai','acak'];
+  const cards=order.filter(k=>ARENA.strategies[k]).map(k=>{
+    const s=ARENA.strategies[k],m=s.summary,[vl,vk]=V[s.verdict]||V.data;
+    const today=(s.today||[]).map(t=>`<span class="chip code" data-chart="${t.k}" style="cursor:pointer">${t.k} · ${num(t.plan.entry)} / SL ${num(t.plan.sl)} / TP ${num(t.plan.tp1)}</span>`).join('');
+    const rows=(s.trades||[]).slice(0,5).map(t=>{
+      const lab=t.status==='selesai'?t.outcome:({menunggu:'Menunggu',berjalan:'Berjalan',dilewati:'Dilewati'}[t.status]);
+      const k=t.status==='selesai'?(t.pct>0?'good':'bad'):(t.status==='dilewati'?'bad':'warn');
+      return `<div class="row"><span class="c code" data-chart="${t.k}">${t.k}</span><span class="res">${t.pct==null?'':`<b style="color:${tone(t.pct)}">${sgn(t.pct)}</b>`}</span><span class="m">sinyal ${t.sig.slice(8)}/${t.sig.slice(5,7)}</span><span class="res"><span class="pill ${k}">${lab}</span></span></div>`}).join('');
+    return `<article class="card">
+      <div class="card-h"><div><span class="code" style="text-decoration:none;cursor:default">${s.label}</span><span class="name">${s.desc}</span></div><div class="score"><span class="pill ${vk}">${vl}</span></div></div>
+      <div class="tbl" style="margin-top:10px"><div class="th tr"><span></span><span>Selesai</span><span>Menang</span><span>Rata-rata</span><span>PF</span></div>
+      <div class="tr"><span>Hasil nyata</span><span>${m.n_selesai}</span><span>${m.win_rate==null?'–':f1(m.win_rate)+'%'}</span><span>${m.avg==null?'–':(m.avg>0?'+':'')+f2(m.avg)+'%'}</span><span>${m.pf==null?'–':f2(m.pf)}</span></div></div>
+      <p class="size">${m.n_berjalan} berjalan · ${m.n_menunggu} menunggu · hari ini: ${today?'':'tidak ada sinyal'}</p>
+      ${today?`<div class="chips">${today}</div>`:''}
+      ${rows?`<details><summary>Transaksi terakhir</summary><div class="hist">${rows}</div></details>`:''}
+    </article>`}).join('');
+  return `<div class="sect" style="margin-top:0">Arena strategi<small>Pencatatan sejak ${ARENA.started||'-'} · data sampai ${ARENA.last_date} · biaya 0,4% sudah dikurangi · belum ada strategi yang boleh dipakai dengan uang sungguhan sampai berstatus LOLOS</small></div>${cards}
+  <p class="intro" style="grid-column:1/-1;margin:6px 0 0">Daftar saham di kartu hanya untuk dipantau, bukan ajakan membeli. Klik kodenya untuk membuka chart.</p>`;
+}
+
 function history(){
-  if(!BT||!BT.ready)return paperView()+empty('Hasil uji belum tersedia','Hasil backtest muncul setelah pembaruan data pertama berjalan.');
+  if(!BT||!BT.ready)return empty('Hasil uji belum tersedia','Hasil backtest muncul setelah pembaruan data pertama berjalan.');
   const o=BT.overall,tone=v=>v>0?'var(--good)':v<0?'var(--bad)':'var(--ink)';
   const head=`<div class="th tr"><span></span><span>Transaksi</span><span>Menang</span><span>Rata-rata</span><span>PF</span></div>`;
   const rows=(BT.recent||[]).map(h=>{
     const k=h.pct>1?'good':h.pct<0?'bad':'warn';
-    return `<div class="row"><span class="c">${h.k}</span><span class="res"><b style="color:var(--${k})">${sgn(h.pct)}</b></span>
+    return `<div class="row"><span class="c code" data-chart="${h.k}">${h.k}</span><span class="res"><b style="color:var(--${k})">${sgn(h.pct)}</b></span>
       <span class="m"><span class="mt santai">Santai</span> · ${h.tgl.slice(8)}/${h.tgl.slice(5,7)}</span><span class="res"><span class="pill ${k}">${h.hasil}</span></span></div>`;
   }).join('');
-  return paperView()+`
+  return `
     <div class="sect">Hasil simulasi ${BT.period[0]} s/d ${BT.period[1]}<small>Skor ${SIG?SIG.min_score:70}+ · setelah biaya beli 0,15% dan jual 0,25% · ${o.n} transaksi${BT.rules?` · aturan v${BT.version||2}: SL maks ${Math.round(BT.rules.max_risk*100)}%, ATR maks ${f1(BT.rules.max_atr_pct)}%`:''}</small></div>
     <div class="stats s6" style="grid-column:1/-1">
       <div class="stat"><span>Menang</span><b>${f1(o.win_rate)}%</b></div>
@@ -326,7 +369,7 @@ function render(){
   if(FAILED){view.innerHTML=empty('Data belum bisa dimuat','Buka halaman ini lewat alamat GitHub Pages Anda (bukan dengan membuka file langsung), lalu muat ulang.');return}
   if(!SIG){view.innerHTML=empty('Memuat…','');return}
   if(S.tab==='riwayat'){view.innerHTML=history();return}
-  if(S.tab==='cepat'){view.innerHTML=empty('Mode Cepat ditunda','Pengujian pada data nyata menunjukkan pola Open = Low rugi setelah biaya (lebih buruk dari beli acak), jadi tidak dirilis. Mode ini baru dibuka kalau ada aturan yang lolos uji.');return}
+  if(S.tab==='arena'){view.innerHTML=arenaView();return}
   if(!SIG.generated){view.innerHTML=empty('Belum ada data','Jalankan pembaruan pertama di GitHub (Actions → Pembaruan harian → Run workflow). Panduan ada di README.');return}
   const list=SIG.stocks.filter(s=>s.mode==='santai');
   view.innerHTML=list.length?list.map(card).join(''):empty('Hari ini tidak ada saham yang memenuhi syarat','Itu normal. Sinyal hanya muncul bila skor mencapai '+SIG.min_score+' dan saham lolos filter keselamatan (likuid, bukan gocap, tidak naik liar). Tidak ada sinyal berarti lebih baik menunggu.');
@@ -339,11 +382,38 @@ modal.value=num(S.modal);
 modal.addEventListener('input',()=>{const v=+modal.value.replace(/\D/g,'');S.modal=v;modal.value=v?num(v):'';try{localStorage.setItem('sinyal-modal',v)}catch(e){};render()});
 risk.addEventListener('change',()=>{S.risk=+risk.value;try{localStorage.setItem('sinyal-risk',risk.value)}catch(e){};render()});
 
+let TVLOADED=null;
+function tvScript(){
+  if(window.TradingView)return Promise.resolve();
+  if(TVLOADED)return TVLOADED;
+  TVLOADED=new Promise((ok,no)=>{const e=document.createElement('script');e.src='https://s3.tradingview.com/tv.js';e.onload=ok;e.onerror=()=>{TVLOADED=null;no()};document.head.appendChild(e)});
+  return TVLOADED;
+}
+async function openChart(k){
+  const cm=document.getElementById('cm'),tv=document.getElementById('tv');
+  document.getElementById('cmk').textContent=k;
+  const s=SIG&&SIG.stocks&&SIG.stocks.find(x=>x.k===k);
+  document.getElementById('cmp').innerHTML=s?`<span>Entry <b>${num(s.plan.entry)}</b></span><span>SL <b>${num(s.plan.sl)}</b></span><span>TP1 <b>${num(s.plan.tp1)}</b></span><span>TP2 <b>${num(s.plan.tp2)}</b></span>`:'';
+  cm.hidden=false;document.body.style.overflow='hidden';
+  tv.innerHTML='<p style="padding:20px">Memuat chart…</p>';
+  try{
+    await tvScript();
+    tv.innerHTML='';
+    new TradingView.widget({autosize:true,symbol:'IDX:'+k,interval:'D',timezone:'Asia/Jakarta',theme:'light',style:'1',locale:'id',
+      allow_symbol_change:true,hide_side_toolbar:false,withdateranges:true,container_id:'tv'});
+  }catch(e){tv.innerHTML='<p style="padding:20px">Chart tidak bisa dimuat (internet atau pemblokir iklan?). Coba muat ulang halaman.</p>'}
+}
+function closeChart(){document.getElementById('cm').hidden=true;document.getElementById('tv').innerHTML='';document.body.style.overflow=''}
+document.getElementById('cmx').addEventListener('click',closeChart);
+document.getElementById('cm').addEventListener('click',e=>{if(e.target.id==='cm')closeChart()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeChart()});
+document.addEventListener('click',e=>{const t=e.target.closest('[data-chart]');if(t)openChart(t.dataset.chart)});
+
 async function load(){
   try{
     const get=u=>fetch(u+'?t='+Date.now()).then(r=>{if(!r.ok)throw new Error(u);return r.json()});
     [SIG,BT]=await Promise.all([get('signals.json'),get('backtest.json')]);
-    try{PAPER=await get('paper.json')}catch(e){PAPER=null}
+    try{ARENA=await get('arena.json')}catch(e){ARENA=null}
   }catch(e){FAILED=true}
   render();
 }
