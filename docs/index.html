@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sinyal Saham IDX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: satu kolom kartu sinyal ala "struk" dengan tangga harga SL → Entry → TP; jadi 2 kolom di layar lebar. */
+:root{
+  --bg:#EDF1EF; --surface:#FFFFFF; --ink:#13201B; --muted:#5A6A64; --line:#D5DDD9;
+  --accent:#1B4DDB; --accent-ink:#FFFFFF;
+  --good:#0B8A57; --bad:#CF3A3A; --warn:#A86F00;
+  --good-bg:#DDF3E8; --bad-bg:#FBE3E3; --warn-bg:#FAEBC8; --soft:#F5F8F7;
+  --santai:#0A7EA4; --cepat:#B4308C;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"Figtree",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1411; --surface:#151F1A; --ink:#E7F0EB; --muted:#93A59C; --line:#273630;
+    --accent:#6F93FF; --accent-ink:#0D1411;
+    --good:#3DD596; --bad:#FF7A7A; --warn:#E6B341;
+    --good-bg:#12362A; --bad-bg:#3B1B1D; --warn-bg:#3A2F12; --soft:#1A2620;
+    --santai:#5CCBF2; --cepat:#FF8FD6;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1411; --surface:#151F1A; --ink:#E7F0EB; --muted:#93A59C; --line:#273630;
+  --accent:#6F93FF; --accent-ink:#0D1411;
+  --good:#3DD596; --bad:#FF7A7A; --warn:#E6B341;
+  --good-bg:#12362A; --bad-bg:#3B1B1D; --warn-bg:#3A2F12; --soft:#1A2620;
+    --santai:#5CCBF2; --cepat:#FF8FD6;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;-webkit-text-size-adjust:100%}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 40px}
+header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:22px 0 12px}
+.brand{font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:-.02em;line-height:1}
+.brand span{color:var(--accent)}
+.date{font-size:13px;color:var(--muted);text-align:right}
+.demo{display:flex;gap:10px;align-items:flex-start;background:var(--warn-bg);color:var(--ink);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:12px}
+.demo b{color:var(--warn)}
+.settings{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px}
+.settings label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
+.settings input,.settings select{font:600 16px var(--mono);color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:9px 10px;width:100%}
+.settings input:focus-visible,.settings select:focus-visible,.tab:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tabs{position:sticky;top:0;z-index:5;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--bg);padding:6px 0 10px}
+.tab{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 14px var(--body);padding:10px 6px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px}
+.tab small{font-weight:500;color:var(--muted);font-size:11px}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tab[aria-selected="true"] small{color:inherit;opacity:.85}
+.intro{margin:2px 0 12px;font-size:14px;color:var(--muted)}
+.intro b{color:var(--ink)}
+.feed{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:760px){.feed{grid-template-columns:1fr 1fr}.settings{grid-template-columns:1.4fr 1fr 2fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.code{font-family:var(--display);font-weight:800;font-size:24px;letter-spacing:-.01em;line-height:1}
+.name{display:block;font-size:12.5px;color:var(--muted);margin-top:3px}
+.score{display:flex;align-items:center;gap:10px}
+.ring{--p:80;width:52px;height:52px;border-radius:50%;background:conic-gradient(var(--c,var(--good)) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;position:relative;flex:none}
+.ring::before{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--surface)}
+.ring b{position:relative;font:700 16px var(--mono)}
+.pill{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:99px;white-space:nowrap}
+.pill.good{background:var(--good-bg);color:var(--good)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;font-weight:600;background:var(--soft);border:1px solid var(--line);padding:3px 8px;border-radius:8px}
+.ladder{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px}
+.ladder i{display:block;min-width:6px}
+.ladder .r{background:var(--bad)}
+.ladder .g1{background:color-mix(in srgb,var(--good) 65%,var(--surface))}
+.ladder .g2{background:var(--good)}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0}
+.lv{background:var(--soft);border-radius:10px;padding:8px 8px 7px;min-width:0}
+.lv dt{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+.lv dd{margin:2px 0 0;font:700 15px var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lv small{display:block;font:500 11px var(--mono);margin-top:1px}
+.lv.sl dt,.lv.sl small{color:var(--bad)}
+.lv.tp dt,.lv.tp small{color:var(--good)}
+.lv.en{outline:2px solid var(--accent);outline-offset:-2px}
+.lv.en dt{color:var(--accent)}
+.size{margin:0;font-size:13.5px;background:var(--soft);border-radius:10px;padding:9px 10px}
+.size b{font-family:var(--mono)}
+.size .l{color:var(--bad)} .size .p{color:var(--good)}
+details{border-top:1px dashed var(--line);padding-top:10px}
+summary{cursor:pointer;font-weight:700;font-size:13.5px;color:var(--accent);list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"▾";transition:transform .2s}
+details[open] summary::after{transform:rotate(180deg)}
+.sig{display:grid;grid-template-columns:1fr auto;gap:2px 10px;margin-top:10px;font-size:13px}
+.sig .n{font-weight:600}
+.sig .pt{font:600 12px var(--mono);color:var(--muted);text-align:right}
+.sig .nt{grid-column:1/-1;color:var(--muted);font-size:12.5px}
+.sig .b{grid-column:1/-1;height:5px;border-radius:9px;background:var(--line);overflow:hidden;margin-bottom:6px}
+.sig .b i{display:block;height:100%;background:var(--accent)}
+.sig .b i.off{background:var(--muted);opacity:.4}
+.foot{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.tag{font-weight:700;letter-spacing:.06em;font-size:10.5px;border:1px dashed var(--muted);padding:1px 6px;border-radius:6px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.stat span{font-size:12px;color:var(--muted);font-weight:600}
+.stat b{display:block;font:700 22px var(--mono);margin-top:2px}
+.hist{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.row{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:12px 14px;border-top:1px solid var(--line);align-items:center}
+.row:first-child{border-top:0}
+.row .c{font:800 17px var(--display)}
+.row .m{font-size:12px;color:var(--muted)}
+.row .res{justify-self:end;text-align:right}
+.row .res b{font:700 15px var(--mono)}
+.mt{font-weight:700;font-size:12.5px;display:inline-flex;align-items:center;gap:6px}
+.mt::before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor}
+.mt.santai{color:var(--santai)}
+.mt.cepat{color:var(--cepat)}
+.tab .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:baseline}
+.tab[aria-selected="true"] .dot{box-shadow:0 0 0 2px var(--accent-ink)}
+.disc{margin-top:22px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.status{font-size:12.5px;color:var(--muted);margin:-4px 0 12px;display:flex;flex-wrap:wrap;gap:4px 12px}
+.status b{color:var(--ink)}
+.empty{grid-column:1/-1;background:var(--surface);border:1px dashed var(--line);border-radius:16px;padding:22px 18px;text-align:left}
+.empty h3{margin:0 0 6px;font:700 18px var(--display)}
+.empty p{margin:0;color:var(--muted);font-size:14px}
+.sect{grid-column:1/-1;font:700 16px var(--display);margin:14px 0 2px}
+.sect small{display:block;font:400 12.5px var(--body);color:var(--muted);margin-top:2px}
+.tbl{grid-column:1/-1;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;font-size:13.5px}
+.tbl .tr{display:grid;grid-template-columns:1.6fr .8fr .8fr .9fr .9fr;gap:6px;padding:10px 14px;border-top:1px solid var(--line);align-items:center}
+.tbl .tr:first-child{border-top:0}
+.tbl .th{font-size:11.5px;font-weight:700;color:var(--muted);background:var(--soft)}
+.tbl .tr span:not(:first-child){text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.stats.s6{grid-template-columns:repeat(3,1fr)}
+.stats.s6 .stat b{font-size:19px}
+.tab[disabled]{opacity:.55;cursor:default}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">Sinyal<span>IDX</span></div>
+    <div class="date" id="date"></div>
+  </header>
+
+  <div id="demo" class="demo" role="note" hidden><b>UJI COBA</b><span>Data di bawah dibuat acak untuk menguji program. Bukan data pasar dan bukan rekomendasi.</span></div>
+
+  <section class="settings" id="settings" aria-label="Pengaturan modal">
+    <label for="modal">Modal (Rp)<input id="modal" inputmode="numeric" autocomplete="off"></label>
+    <label for="risk">Risiko per transaksi
+      <select id="risk"><option value="0.5">0,5%</option><option value="1" selected>1%</option><option value="2">2%</option></select>
+    </label>
+  </section>
+
+  <nav class="tabs" role="tablist" aria-label="Mode">
+    <button class="tab" role="tab" data-tab="santai" aria-selected="true"><span><i class="dot" style="background:var(--santai)"></i>Santai</span><small>1-4 minggu</small></button>
+    <button class="tab" role="tab" data-tab="cepat" aria-selected="false"><span><i class="dot" style="background:var(--cepat)"></i>Cepat</span><small>segera</small></button>
+    <button class="tab" role="tab" data-tab="riwayat" aria-selected="false"><span>Riwayat</span><small>hasil uji</small></button>
+  </nav>
+
+  <p class="intro" id="intro"></p>
+  <p class="status" id="status"></p>
+  <main id="view" class="feed"></main>
+
+  <p class="disc">Alat bantu analisis, bukan nasihat investasi. Perdagangan saham berisiko rugi, dan hasil uji pada data masa lalu tidak menjamin hasil berikutnya. Data harian dari Yahoo Finance bisa terlambat atau keliru; cek ulang harga di aplikasi sekuritas Anda sebelum bertransaksi.</p>
+</div>
+
+<script>
+const INTRO={
+  santai:'<b>Mode Santai</b>: cukup cek 1-2 kali sehari. Tren naik, akumulasi, dan pullback ke support, dipegang beberapa hari sampai beberapa minggu.',
+  cepat:'<b>Mode Cepat</b>: sinyal 1-3 hari (Open = Low, lonjakan volume).',
+  riwayat:'<b>Riwayat</b>: hasil simulasi aturan Santai pada data historis, sudah dikurangi biaya beli dan jual.'
+};
+const S={modal:10000000,risk:1,tab:'santai'};
+let SIG=null,BT=null,FAILED=false;
+
+const nf=new Intl.NumberFormat('id-ID'),num=v=>nf.format(v);
+const pc=(a,b)=>(a-b)/b*100;
+const sgn=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1).replace('.',',')+'%';
+const f1=v=>(+v).toFixed(1).replace('.',','),f2=v=>(+v).toFixed(2).replace('.',',');
+function rp(v){
+  if(v>=1e9)return 'Rp '+(v/1e9).toFixed(1).replace('.',',')+' M';
+  if(v>=1e6)return 'Rp '+(v/1e6).toFixed(1).replace('.',',')+' jt';
+  if(v>=1e3)return 'Rp '+Math.round(v/1e3)+' rb';
+  return 'Rp '+Math.round(v);
+}
+const conf=sc=>sc>=80?['Tinggi','good']:sc>=70?['Sedang','warn']:['Rendah','bad'];
+
+function sizing(p){
+  const riskRp=S.modal*S.risk/100;
+  let lots=Math.floor(Math.floor(riskRp/p.risk)/100);
+  lots=Math.max(0,Math.min(lots,Math.floor(S.modal/(p.entry*100))));
+  const sh=lots*100;
+  return {lots,value:sh*p.entry,loss:sh*p.risk,g1:sh*(p.tp1-p.entry),g2:sh*(p.tp2-p.entry)};
+}
+
+function card(s){
+  const p=s.plan,sc=s.score,[cl,ck]=conf(sc),z=sizing(p);
+  const rr1=(p.tp1-p.entry)/p.risk,rr2=(p.tp2-p.entry)/p.risk;
+  const top=[...s.sig].filter(x=>x.p>=x.m*0.6).sort((a,b)=>b.p/b.m-a.p/a.m).slice(0,3);
+  const ringColor=ck==='good'?'var(--good)':'var(--warn)';
+  const sizeLine=z.lots>0
+    ? `Beli <b>${z.lots} lot</b> (${rp(z.value)}) · rugi maks <b class="l">${rp(z.loss)}</b> · untung <b class="p">${rp(z.g1)}</b> – <b class="p">${rp(z.g2)}</b>`
+    : `Modal atau batas risiko terlalu kecil untuk 1 lot saham ini.`;
+  return `<article class="card">
+    <div class="card-h">
+      <div><span class="code">${s.k}</span><span class="name">${s.nm}</span><span class="mt santai" style="margin-top:6px">Santai</span></div>
+      <div class="score"><span class="pill ${ck}">${cl}</span>
+        <div class="ring" style="--p:${sc};--c:${ringColor}" role="img" aria-label="Skor ${sc} dari 100"><b>${sc}</b></div></div>
+    </div>
+    <div class="chips">${top.map(x=>`<span class="chip">${x.n}</span>`).join('')}</div>
+    <div class="ladder" aria-hidden="true">
+      <i class="r" style="flex:${p.risk}"></i><i class="g1" style="flex:${p.tp1-p.entry}"></i><i class="g2" style="flex:${p.tp2-p.tp1}"></i>
+    </div>
+    <dl class="levels">
+      <div class="lv sl"><dt>SL</dt><dd>${num(p.sl)}</dd><small>${sgn(pc(p.sl,p.entry))}</small></div>
+      <div class="lv en"><dt>ENTRY</dt><dd>${num(p.entry)}</dd><small>&nbsp;</small></div>
+      <div class="lv tp"><dt>TP1</dt><dd>${num(p.tp1)}</dd><small>${sgn(pc(p.tp1,p.entry))}</small></div>
+      <div class="lv tp"><dt>TP2</dt><dd>${num(p.tp2)}</dd><small>${sgn(pc(p.tp2,p.entry))}</small></div>
+    </dl>
+    <p class="size">${sizeLine}</p>
+    <details>
+      <summary>Lihat alasan</summary>
+      <div class="sig">${s.sig.map(x=>`
+        <span class="n">${x.n}</span><span class="pt">${x.p}/${x.m}</span>
+        <span class="b"><i class="${x.p?'':'off'}" style="width:${x.p/x.m*100}%"></i></span>
+        <span class="nt">${x.t}</span>`).join('')}</div>
+    </details>
+    <div class="foot"><span>R:R 1 : ${f1(rr1)} / 1 : ${f1(rr2)} · berlaku ${SIG.valid_days} hari bursa · harga ${num(Math.round(s.price))} (${sgn(s.chg)})</span></div>
+  </article>`;
+}
+
+function empty(t,p){return `<div class="empty"><h3>${t}</h3><p>${p}</p></div>`}
+
+function statRow(label,st){
+  if(!st||!st.n)return `<div class="tr"><span>${label}</span><span>0</span><span>–</span><span>–</span><span>–</span></div>`;
+  return `<div class="tr"><span>${label}</span><span>${st.n}</span><span>${f1(st.win_rate)}%</span><span>${st.expectancy>0?'+':''}${f2(st.expectancy)}%</span><span>${st.profit_factor==null?'–':f2(st.profit_factor)}</span></div>`;
+}
+
+function history(){
+  if(!BT||!BT.ready)return empty('Hasil uji belum tersedia','Hasil backtest muncul setelah pembaruan data pertama berjalan.');
+  const o=BT.overall,tone=v=>v>0?'var(--good)':v<0?'var(--bad)':'var(--ink)';
+  const head=`<div class="th tr"><span></span><span>Transaksi</span><span>Menang</span><span>Rata-rata</span><span>PF</span></div>`;
+  const rows=(BT.recent||[]).map(h=>{
+    const k=h.pct>1?'good':h.pct<0?'bad':'warn';
+    return `<div class="row"><span class="c">${h.k}</span><span class="res"><b style="color:var(--${k})">${sgn(h.pct)}</b></span>
+      <span class="m"><span class="mt santai">Santai</span> · ${h.tgl.slice(8)}/${h.tgl.slice(5,7)}</span><span class="res"><span class="pill ${k}">${h.hasil}</span></span></div>`;
+  }).join('');
+  return `
+    <div class="sect" style="margin-top:0">Hasil simulasi ${BT.period[0]} s/d ${BT.period[1]}<small>Skor ${SIG?SIG.min_score:70}+ · setelah biaya beli 0,15% dan jual 0,25% · ${o.n} transaksi</small></div>
+    <div class="stats s6" style="grid-column:1/-1">
+      <div class="stat"><span>Menang</span><b>${f1(o.win_rate)}%</b></div>
+      <div class="stat"><span>Rata-rata untung</span><b style="color:var(--good)">${sgn(o.avg_win)}</b></div>
+      <div class="stat"><span>Rata-rata rugi</span><b style="color:var(--bad)">${sgn(o.avg_loss)}</b></div>
+      <div class="stat"><span>Rata-rata per transaksi</span><b style="color:${tone(o.expectancy)}">${o.expectancy>0?'+':''}${f2(o.expectancy)}%</b></div>
+      <div class="stat"><span>Profit factor</span><b>${o.profit_factor==null?'–':f2(o.profit_factor)}</b></div>
+      <div class="stat"><span>Penurunan maks</span><b style="color:var(--bad)">${f1(o.max_drawdown)}%</b></div>
+    </div>
+    <div class="sect">Apakah aturan ini bertahan di data baru?<small>Periode awal dipakai untuk merancang aturan. Periode akhir (setelah ${BT.split_date}) adalah ujian yang belum pernah dilihat.</small></div>
+    <div class="tbl">${head}${statRow('Periode awal',BT.in_sample)}${statRow('Periode akhir',BT.out_of_sample)}</div>
+    <div class="sect">Apakah skor tinggi memang lebih baik?<small>Kalau aturan bekerja, baris bawah harus lebih baik dari baris atas.</small></div>
+    <div class="tbl">${head}${['60','70','80'].map(t=>statRow('Skor '+t+'+',BT.by_threshold[t])).join('')}</div>
+    <div class="sect">Transaksi simulasi terakhir</div>
+    <div class="hist" style="grid-column:1/-1">${rows||''}</div>
+    <p class="intro" style="grid-column:1/-1;margin:6px 0 0">PF = profit factor (total untung dibagi total rugi; di atas 1 berarti untung bersih). Ini simulasi, bukan transaksi nyata. Belum memperhitungkan selisih harga jual-beli (slippage) dan saham yang tidak bisa dibeli karena antrean.</p>`;
+}
+
+function render(){
+  const view=document.getElementById('view'),intro=document.getElementById('intro'),st=document.getElementById('status');
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.tab===S.tab));
+  document.getElementById('settings').style.display=S.tab==='santai'?'':'none';
+  intro.innerHTML=INTRO[S.tab];
+  if(SIG&&SIG.generated){
+    st.innerHTML=`<span>Diperbarui <b>${SIG.generated}</b></span><span>Data sampai <b>${SIG.last_data_date}</b></span><span>Dipindai <b>${SIG.scanned}</b> saham, <b>${SIG.passed_filter}</b> lolos filter</span>`;
+    document.getElementById('date').innerHTML='Data penutupan<br>'+SIG.last_data_date;
+  }else st.innerHTML='';
+  document.getElementById('demo').hidden=!((SIG&&SIG.demo)||(BT&&BT.demo));
+  if(FAILED){view.innerHTML=empty('Data belum bisa dimuat','Buka halaman ini lewat alamat GitHub Pages Anda (bukan dengan membuka file langsung), lalu muat ulang.');return}
+  if(!SIG){view.innerHTML=empty('Memuat…','');return}
+  if(S.tab==='riwayat'){view.innerHTML=history();return}
+  if(S.tab==='cepat'){view.innerHTML=empty('Mode Cepat segera hadir','Mode Santai diuji dulu sampai terbukti. Mode Cepat dibuat setelah itu, karena sinyal jangka pendek lebih berisik dan butuh pengujian terpisah.');return}
+  if(!SIG.generated){view.innerHTML=empty('Belum ada data','Jalankan pembaruan pertama di GitHub (Actions → Pembaruan harian → Run workflow). Panduan ada di README.');return}
+  const list=SIG.stocks.filter(s=>s.mode==='santai');
+  view.innerHTML=list.length?list.map(card).join(''):empty('Hari ini tidak ada saham yang memenuhi syarat','Itu normal. Sinyal hanya muncul bila skor mencapai '+SIG.min_score+' dan saham lolos filter keselamatan (likuid, bukan gocap, tidak naik liar). Tidak ada sinyal berarti lebih baik menunggu.');
+}
+
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{S.tab=t.dataset.tab;try{localStorage.setItem('sinyal-tab',S.tab)}catch(e){};render()}));
+const modal=document.getElementById('modal'),risk=document.getElementById('risk');
+try{const t=localStorage.getItem('sinyal-tab');if(INTRO[t])S.tab=t;const m=+localStorage.getItem('sinyal-modal');if(m>0)S.modal=m;const r=localStorage.getItem('sinyal-risk');if(r){S.risk=+r;risk.value=r}}catch(e){}
+modal.value=num(S.modal);
+modal.addEventListener('input',()=>{const v=+modal.value.replace(/\D/g,'');S.modal=v;modal.value=v?num(v):'';try{localStorage.setItem('sinyal-modal',v)}catch(e){};render()});
+risk.addEventListener('change',()=>{S.risk=+risk.value;try{localStorage.setItem('sinyal-risk',risk.value)}catch(e){};render()});
+
+async function load(){
+  try{
+    const get=u=>fetch(u+'?t='+Date.now()).then(r=>{if(!r.ok)throw new Error(u);return r.json()});
+    [SIG,BT]=await Promise.all([get('signals.json'),get('backtest.json')]);
+  }catch(e){FAILED=true}
+  render();
+}
+render();load();
+</script>
+</body>
+</html>
