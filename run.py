@@ -13,6 +13,7 @@ import requests
 
 from backtest import run_backtest
 from engine import CFG, compute, explain, make_plan
+from paper import update as paper_update
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"}
 
@@ -150,6 +151,10 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     json.dump(signals, open(os.path.join(a.out, "signals.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1, allow_nan=False)
     json.dump(bt, open(os.path.join(a.out, "backtest.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1, allow_nan=False)
+    if not a.demo:
+        ps = paper_update(os.path.join(a.out, "paper.json"), {c: d for c, (d, _) in universe.items()},
+                          stocks, names, str(latest.date()))
+        print("Uji maju:", ps)
     print(f"Sinyal hari ini: {len(stocks)} saham (dari {passed} yang lolos filter). Hasil ditulis ke folder '{a.out}'.")
 
 

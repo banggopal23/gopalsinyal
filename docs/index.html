@@ -161,7 +161,7 @@ details[open] summary::after{transform:rotate(180deg)}
 
   <nav class="tabs" role="tablist" aria-label="Mode">
     <button class="tab" role="tab" data-tab="santai" aria-selected="true"><span><i class="dot" style="background:var(--santai)"></i>Santai</span><small>1-4 minggu</small></button>
-    <button class="tab" role="tab" data-tab="cepat" aria-selected="false"><span><i class="dot" style="background:var(--cepat)"></i>Cepat</span><small>segera</small></button>
+    <button class="tab" role="tab" data-tab="cepat" aria-selected="false"><span><i class="dot" style="background:var(--cepat)"></i>Cepat</span><small>ditunda</small></button>
     <button class="tab" role="tab" data-tab="riwayat" aria-selected="false"><span>Riwayat</span><small>hasil uji</small></button>
   </nav>
 
@@ -174,12 +174,12 @@ details[open] summary::after{transform:rotate(180deg)}
 
 <script>
 const INTRO={
-  santai:'<b>Mode Santai</b>: cukup cek 1-2 kali sehari. Tren naik, akumulasi, dan pullback ke support, dipegang beberapa hari sampai beberapa minggu.',
-  cepat:'<b>Mode Cepat</b>: sinyal 1-3 hari (Open = Low, lonjakan volume).',
-  riwayat:'<b>Riwayat</b>: hasil simulasi aturan Santai pada data historis, sudah dikurangi biaya beli dan jual.'
+  santai:'<b>Daftar pantau</b>: saham likuid dengan tren dan posisi harga yang sehat, lengkap dengan rencana Entry, SL, TP dan jumlah lot. <b>Bukan jaminan untung.</b> Uji pada data 4 tahun belum menunjukkan keunggulan setelah biaya, jadi pakai sebagai alat disiplin risiko, bukan sinyal pasti. Pantau hasil nyatanya di tab Riwayat → Uji maju.',
+  cepat:'<b>Mode Cepat</b>: ditunda.',
+  riwayat:'<b>Riwayat</b>: (1) Uji maju: sinyal yang dicatat sejak hari ini dan dihitung dari harga nyata, tanpa uang sungguhan. (2) Simulasi data lama, sudah dikurangi biaya.'
 };
 const S={modal:10000000,risk:1,tab:'santai'};
-let SIG=null,BT=null,FAILED=false;
+let SIG=null,BT=null,PAPER=null,FAILED=false;
 
 const nf=new Intl.NumberFormat('id-ID'),num=v=>nf.format(v);
 const pc=(a,b)=>(a-b)/b*100;
@@ -267,8 +267,25 @@ function diagnosis(){
     <div class="tbl"><div class="th tr"><span></span><span>Transaksi</span><span>Porsi</span><span>Rata-rata</span><span></span></div>${d.hasil.map(outRow).join('')}</div>`;
 }
 
+function paperView(){
+  const head=`<div class="th tr"><span></span><span>Selesai</span><span>Menang</span><span>Rata-rata</span><span>PF</span></div>`;
+  if(!PAPER)return `<div class="sect" style="margin-top:0">Uji maju (tanpa uang sungguhan)<small>Belum mulai. Pencatatan berjalan otomatis setiap hari bursa setelah pembaruan data pertama dengan versi ini.</small></div>`;
+  const m=PAPER.summary,T=PAPER.trades||[];
+  const tone=v=>v>0?'var(--good)':v<0?'var(--bad)':'var(--ink)';
+  const st={menunggu:['Menunggu buka besok','warn'],berjalan:['Berjalan','warn'],dilewati:['Dilewati','bad']};
+  const rows=T.map(t=>{
+    const [lab,k]=t.status==='selesai'?[t.outcome,t.pct>0?'good':'bad']:st[t.status];
+    const v=t.pct==null?'':`<b style="color:${tone(t.pct)}">${sgn(t.pct)}</b>`;
+    return `<div class="row"><span class="c">${t.k}</span><span class="res">${v}</span><span class="m"><span class="mt santai">Santai</span> · sinyal ${t.sig.slice(8)}/${t.sig.slice(5,7)}</span><span class="res"><span class="pill ${k}">${lab}</span></span></div>`;
+  }).join('');
+  return `<div class="sect" style="margin-top:0">Uji maju (tanpa uang sungguhan)<small>Sejak ${PAPER.started||'-'} · sinyal dicatat saat muncul dan tidak bisa diubah belakangan · biaya 0,4% sudah dikurangi · ${m.n_berjalan} berjalan, ${m.n_menunggu} menunggu</small></div>
+    <div class="tbl">${head}<div class="tr"><span>Hasil nyata</span><span>${m.n_selesai}</span><span>${m.win_rate==null?'–':f1(m.win_rate)+'%'}</span><span>${m.avg==null?'–':(m.avg>0?'+':'')+f2(m.avg)+'%'}</span><span>${m.pf==null?'–':f2(m.pf)}</span></div></div>
+    <p class="intro" style="grid-column:1/-1;margin:6px 0 0">Baru bermakna setelah minimal 30 transaksi selesai (biasanya 2-3 bulan). Kalau rata-rata masih negatif atau PF di bawah 1, jangan pakai uang sungguhan.</p>
+    <div class="hist" style="grid-column:1/-1">${rows}</div>`;
+}
+
 function history(){
-  if(!BT||!BT.ready)return empty('Hasil uji belum tersedia','Hasil backtest muncul setelah pembaruan data pertama berjalan.');
+  if(!BT||!BT.ready)return paperView()+empty('Hasil uji belum tersedia','Hasil backtest muncul setelah pembaruan data pertama berjalan.');
   const o=BT.overall,tone=v=>v>0?'var(--good)':v<0?'var(--bad)':'var(--ink)';
   const head=`<div class="th tr"><span></span><span>Transaksi</span><span>Menang</span><span>Rata-rata</span><span>PF</span></div>`;
   const rows=(BT.recent||[]).map(h=>{
@@ -276,8 +293,8 @@ function history(){
     return `<div class="row"><span class="c">${h.k}</span><span class="res"><b style="color:var(--${k})">${sgn(h.pct)}</b></span>
       <span class="m"><span class="mt santai">Santai</span> · ${h.tgl.slice(8)}/${h.tgl.slice(5,7)}</span><span class="res"><span class="pill ${k}">${h.hasil}</span></span></div>`;
   }).join('');
-  return `
-    <div class="sect" style="margin-top:0">Hasil simulasi ${BT.period[0]} s/d ${BT.period[1]}<small>Skor ${SIG?SIG.min_score:70}+ · setelah biaya beli 0,15% dan jual 0,25% · ${o.n} transaksi${BT.rules?` · aturan v${BT.version||2}: SL maks ${Math.round(BT.rules.max_risk*100)}%, ATR maks ${f1(BT.rules.max_atr_pct)}%`:''}</small></div>
+  return paperView()+`
+    <div class="sect">Hasil simulasi ${BT.period[0]} s/d ${BT.period[1]}<small>Skor ${SIG?SIG.min_score:70}+ · setelah biaya beli 0,15% dan jual 0,25% · ${o.n} transaksi${BT.rules?` · aturan v${BT.version||2}: SL maks ${Math.round(BT.rules.max_risk*100)}%, ATR maks ${f1(BT.rules.max_atr_pct)}%`:''}</small></div>
     <div class="stats s6" style="grid-column:1/-1">
       <div class="stat"><span>Menang</span><b>${f1(o.win_rate)}%</b></div>
       <div class="stat"><span>Rata-rata untung</span><b style="color:var(--good)">${sgn(o.avg_win)}</b></div>
@@ -309,7 +326,7 @@ function render(){
   if(FAILED){view.innerHTML=empty('Data belum bisa dimuat','Buka halaman ini lewat alamat GitHub Pages Anda (bukan dengan membuka file langsung), lalu muat ulang.');return}
   if(!SIG){view.innerHTML=empty('Memuat…','');return}
   if(S.tab==='riwayat'){view.innerHTML=history();return}
-  if(S.tab==='cepat'){view.innerHTML=empty('Mode Cepat segera hadir','Mode Santai diuji dulu sampai terbukti. Mode Cepat dibuat setelah itu, karena sinyal jangka pendek lebih berisik dan butuh pengujian terpisah.');return}
+  if(S.tab==='cepat'){view.innerHTML=empty('Mode Cepat ditunda','Pengujian pada data nyata menunjukkan pola Open = Low rugi setelah biaya (lebih buruk dari beli acak), jadi tidak dirilis. Mode ini baru dibuka kalau ada aturan yang lolos uji.');return}
   if(!SIG.generated){view.innerHTML=empty('Belum ada data','Jalankan pembaruan pertama di GitHub (Actions → Pembaruan harian → Run workflow). Panduan ada di README.');return}
   const list=SIG.stocks.filter(s=>s.mode==='santai');
   view.innerHTML=list.length?list.map(card).join(''):empty('Hari ini tidak ada saham yang memenuhi syarat','Itu normal. Sinyal hanya muncul bila skor mencapai '+SIG.min_score+' dan saham lolos filter keselamatan (likuid, bukan gocap, tidak naik liar). Tidak ada sinyal berarti lebih baik menunggu.');
@@ -326,6 +343,7 @@ async function load(){
   try{
     const get=u=>fetch(u+'?t='+Date.now()).then(r=>{if(!r.ok)throw new Error(u);return r.json()});
     [SIG,BT]=await Promise.all([get('signals.json'),get('backtest.json')]);
+    try{PAPER=await get('paper.json')}catch(e){PAPER=null}
   }catch(e){FAILED=true}
   render();
 }
