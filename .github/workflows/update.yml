@@ -23,6 +23,6 @@ jobs:
         run: |
           git config user.name "sinyal-bot"
           git config user.email "sinyal-bot@users.noreply.github.com"
-          git add docs/signals.json docs/backtest.json docs/paper.json
+          git add docs/signals.json docs/backtest.json docs/arena.json
           git commit -m "Pembaruan data $(date -u +%F)" || echo "Tidak ada perubahan"
           git push
