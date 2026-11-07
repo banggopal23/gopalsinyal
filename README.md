@@ -1,4 +1,4 @@
-# Sinyal IDX (mode Santai)
+# Gopal Sinyal (mode Santai)
 
 Aplikasi web gratis yang tiap sore memindai saham IDX, memberi skor 0-100, lalu menampilkan
 **Entry, SL, TP1, TP2** dan jumlah lot sesuai modal Anda. Dilengkapi hasil uji (backtest) supaya

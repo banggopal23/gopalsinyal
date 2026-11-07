@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sinyal Saham IDX</title>
+<title>Gopal Sinyal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -146,7 +146,7 @@ details[open] summary::after{transform:rotate(180deg)}
 <body>
 <div class="wrap">
   <header class="top">
-    <div class="brand">Sinyal<span>IDX</span></div>
+    <div class="brand">Gopal<span>Sinyal</span></div>
     <div class="date" id="date"></div>
   </header>
 
@@ -244,6 +244,29 @@ function statRow(label,st){
   return `<div class="tr"><span>${label}</span><span>${st.n}</span><span>${f1(st.win_rate)}%</span><span>${st.expectancy>0?'+':''}${f2(st.expectancy)}%</span><span>${st.profit_factor==null?'–':f2(st.profit_factor)}</span></div>`;
 }
 
+function outRow(h){
+  return `<div class="tr"><span>${h.label}</span><span>${h.n}</span><span>${f1(h.share)}%</span><span>${h.avg>0?'+':''}${f2(h.avg)}%</span><span></span></div>`;
+}
+
+function diagnosis(){
+  const d=BT&&BT.diagnosis;
+  if(!d||!d.n)return '';
+  const head=`<div class="th tr"><span></span><span>Transaksi</span><span>Menang</span><span>Rata-rata</span><span>PF</span></div>`;
+  const comp=d.komponen.map(c=>statRow(c.name+': tinggi',c.tinggi)+statRow(c.name+': rendah',c.rendah)).join('');
+  return `
+    <div class="sect">Diagnosis: apa yang membuat untung atau rugi?<small>Dihitung dari ${d.n} transaksi skor 60+. Dipakai untuk memperbaiki aturan, bukan untuk bertransaksi.</small></div>
+    <div class="sect" style="margin-top:2px;font-size:14px">Komponen skor<small>Tinggi = nilai komponen minimal 60% dari maksimumnya. Kalau baris "tinggi" tidak lebih baik dari "rendah", komponen itu tidak membantu.</small></div>
+    <div class="tbl">${head}${comp}</div>
+    <div class="sect" style="margin-top:2px;font-size:14px">Lebar stop loss</div>
+    <div class="tbl">${head}${d.sl.map(x=>statRow(x.label,x)).join('')}</div>
+    <div class="sect" style="margin-top:2px;font-size:14px">Kondisi pasar saat sinyal muncul</div>
+    <div class="tbl">${head}${d.pasar.map(x=>statRow(x.label,x)).join('')}</div>
+    <div class="sect" style="margin-top:2px;font-size:14px">Per tahun</div>
+    <div class="tbl">${head}${d.tahun.map(x=>statRow(x.label,x)).join('')}</div>
+    <div class="sect" style="margin-top:2px;font-size:14px">Bagaimana transaksi berakhir</div>
+    <div class="tbl"><div class="th tr"><span></span><span>Transaksi</span><span>Porsi</span><span>Rata-rata</span><span></span></div>${d.hasil.map(outRow).join('')}</div>`;
+}
+
 function history(){
   if(!BT||!BT.ready)return empty('Hasil uji belum tersedia','Hasil backtest muncul setelah pembaruan data pertama berjalan.');
   const o=BT.overall,tone=v=>v>0?'var(--good)':v<0?'var(--bad)':'var(--ink)';
@@ -254,7 +277,7 @@ function history(){
       <span class="m"><span class="mt santai">Santai</span> · ${h.tgl.slice(8)}/${h.tgl.slice(5,7)}</span><span class="res"><span class="pill ${k}">${h.hasil}</span></span></div>`;
   }).join('');
   return `
-    <div class="sect" style="margin-top:0">Hasil simulasi ${BT.period[0]} s/d ${BT.period[1]}<small>Skor ${SIG?SIG.min_score:70}+ · setelah biaya beli 0,15% dan jual 0,25% · ${o.n} transaksi</small></div>
+    <div class="sect" style="margin-top:0">Hasil simulasi ${BT.period[0]} s/d ${BT.period[1]}<small>Skor ${SIG?SIG.min_score:70}+ · setelah biaya beli 0,15% dan jual 0,25% · ${o.n} transaksi${BT.rules?` · aturan v${BT.version||2}: SL maks ${Math.round(BT.rules.max_risk*100)}%, ATR maks ${f1(BT.rules.max_atr_pct)}%`:''}</small></div>
     <div class="stats s6" style="grid-column:1/-1">
       <div class="stat"><span>Menang</span><b>${f1(o.win_rate)}%</b></div>
       <div class="stat"><span>Rata-rata untung</span><b style="color:var(--good)">${sgn(o.avg_win)}</b></div>
@@ -267,6 +290,7 @@ function history(){
     <div class="tbl">${head}${statRow('Periode awal',BT.in_sample)}${statRow('Periode akhir',BT.out_of_sample)}</div>
     <div class="sect">Apakah skor tinggi memang lebih baik?<small>Kalau aturan bekerja, baris bawah harus lebih baik dari baris atas.</small></div>
     <div class="tbl">${head}${['60','70','80'].map(t=>statRow('Skor '+t+'+',BT.by_threshold[t])).join('')}</div>
+    ${diagnosis()}
     <div class="sect">Transaksi simulasi terakhir</div>
     <div class="hist" style="grid-column:1/-1">${rows||''}</div>
     <p class="intro" style="grid-column:1/-1;margin:6px 0 0">PF = profit factor (total untung dibagi total rugi; di atas 1 berarti untung bersih). Ini simulasi, bukan transaksi nyata. Belum memperhitungkan selisih harga jual-beli (slippage) dan saham yang tidak bisa dibeli karena antrean.</p>`;

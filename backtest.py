@@ -10,7 +10,7 @@ Aturan simulasi (sengaja konservatif):
 """
 import numpy as np
 import pandas as pd
-from engine import CFG, make_plan
+from engine import CFG, MAXPTS, make_plan
 
 FEE_BUY, FEE_SELL = 0.0015, 0.0025
 
@@ -59,8 +59,11 @@ def simulate(df, sc, min_score, cfg=CFG, start=None, end=None):
             outcome = "TP1"           # TP1 tercapai lalu sisa keluar di titik impas
         net = gross - FEE_BUY - FEE_SELL
         trades.append(dict(entry_date=str(idx[j].date()), exit_date=str(idx[exit_i].date()),
+                           signal_date=str(idx[i].date()),
                            score=int(r["total"]), net=net, R=net / risk_pct,
-                           outcome=outcome, bars=exit_i - j + 1))
+                           outcome=outcome, bars=exit_i - j + 1,
+                           risk_pct=p["risk"] / p["entry"],
+                           comps={k: float(r[k]) for k in MAXPTS}))
         blocked_until = exit_i
     return trades
 
@@ -87,6 +90,47 @@ def stats(trades, risk_per_trade=0.01):
     )
 
 
+def slim(st):
+    if not st.get("n"):
+        return dict(n=0)
+    return {k: st.get(k) for k in ("n", "win_rate", "expectancy", "profit_factor")}
+
+
+def grp(trades, keyfn, labels):
+    g = {l: [] for l in labels}
+    for t in trades:
+        k = keyfn(t)
+        if k in g:
+            g[k].append(t)
+    return [dict(label=l, **slim(stats(v))) for l, v in g.items()]
+
+
+def diagnose(trades):
+    """Apa yang berkaitan dengan untung atau rugi? Dihitung dari semua transaksi skor 60+ (sampel lebih besar)."""
+    d = {"n": len(trades)}
+    d["komponen"] = []
+    for name, mx in MAXPTS.items():
+        hi = [t for t in trades if t["comps"][name] >= 0.6 * mx]
+        lo = [t for t in trades if t["comps"][name] < 0.6 * mx]
+        d["komponen"].append(dict(name=name, tinggi=slim(stats(hi)), rendah=slim(stats(lo))))
+    sl_lbl = ["SL sempit (sampai 4%)", "SL sedang (4-5%)", "SL lebar (di atas 5%)"]
+    d["sl"] = grp(trades, lambda t: sl_lbl[0] if t["risk_pct"] <= 0.04 else sl_lbl[1] if t["risk_pct"] <= 0.05 else sl_lbl[2], sl_lbl)
+    pm = ["Pasar lemah (<40% saham di atas EMA 50)", "Pasar sedang (40-60%)", "Pasar kuat (>60%)"]
+    def pk(t):
+        v = t.get("breadth")
+        return None if v is None else pm[0] if v < 0.4 else pm[1] if v <= 0.6 else pm[2]
+    d["pasar"] = grp(trades, pk, pm)
+    years = sorted({t["entry_date"][:4] for t in trades})
+    d["tahun"] = grp(trades, lambda t: t["entry_date"][:4], years)
+    out = []
+    for o in ("TP2", "TP1", "SL", "Kedaluwarsa"):
+        sub = [t for t in trades if t["outcome"] == o]
+        out.append(dict(label=o, n=len(sub), share=round(len(sub) / len(trades) * 100, 1) if trades else 0,
+                        avg=round(float(np.mean([t["net"] for t in sub]) * 100), 2) if sub else 0.0))
+    d["hasil"] = out
+    return d
+
+
 def run_backtest(universe, cfg=CFG):
     """universe: {kode: (df, sc)}. Mengembalikan ringkasan untuk file backtest.json."""
     all_dates = sorted({d for df, sc in universe.values() for d in df.index[cfg["warmup"]:]})
@@ -94,22 +138,29 @@ def run_backtest(universe, cfg=CFG):
         return dict(ready=False)
     cut = all_dates[int(len(all_dates) * 0.6)]
     start, end = all_dates[0], all_dates[-1]
+    # Kondisi pasar: porsi saham yang di atas EMA 50 pada tiap tanggal (hanya data sampai tanggal itu)
+    breadth = pd.concat({c: sc["f_e50"].astype(float) for c, (df, sc) in universe.items()}, axis=1).mean(axis=1)
 
     def collect(min_score, a=None, b=None):
         out = []
         for code, (df, sc) in universe.items():
             for tr in simulate(df, sc, min_score, cfg, a, b):
                 tr["k"] = code
+                v = breadth.get(pd.Timestamp(tr["signal_date"]))
+                tr["breadth"] = None if v is None or v != v else float(v)
                 out.append(tr)
         return out
 
-    res = dict(ready=True, period=[str(start.date()), str(end.date())], split_date=str(cut.date()),
-               fees=dict(buy=FEE_BUY, sell=FEE_SELL))
-    main = collect(cfg["min_score"])
+    res = dict(ready=True, version=2, period=[str(start.date()), str(end.date())], split_date=str(cut.date()),
+               fees=dict(buy=FEE_BUY, sell=FEE_SELL),
+               rules=dict(min_score=cfg["min_score"], max_atr_pct=cfg["max_atr_pct"], max_risk=cfg["max_risk"]))
+    by_th = {th: collect(th) for th in (60, 70, 80)}
+    main = by_th[cfg["min_score"]] if cfg["min_score"] in by_th else collect(cfg["min_score"])
     res["overall"] = stats(main)
-    res["in_sample"] = stats(collect(cfg["min_score"], start, cut))
-    res["out_of_sample"] = stats(collect(cfg["min_score"], cut, end))
-    res["by_threshold"] = {str(th): stats(collect(th)) for th in (60, 70, 80)}
+    res["in_sample"] = stats([t for t in main if t["entry_date"] <= str(cut.date())])
+    res["out_of_sample"] = stats([t for t in main if t["entry_date"] > str(cut.date())])
+    res["by_threshold"] = {str(th): stats(v) for th, v in by_th.items()}
+    res["diagnosis"] = diagnose(by_th[60])
     last = sorted(main, key=lambda x: x["exit_date"], reverse=True)[:25]
     res["recent"] = [dict(k=t["k"], tgl=t["exit_date"], hasil=t["outcome"], pct=round(t["net"] * 100, 1)) for t in last]
     return res

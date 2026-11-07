@@ -9,11 +9,11 @@ import pandas as pd
 CFG = dict(
     min_value_idr=5e9,    # rata-rata nilai transaksi 20 hari minimal Rp 5 miliar
     min_price=100,        # buang saham gocap / harga sangat rendah
-    max_atr_pct=8.0,      # buang saham terlalu liar (ATR > 8% harga)
+    max_atr_pct=3.5,      # buang saham terlalu liar (ATR > 3,5% harga)
     max_run10=35.0,       # buang yang sudah naik > 35% dalam 10 hari (rawan pompom)
     min_score=70,
     sl_atr=1.8, r1=2.0, r2=3.0,
-    min_risk=0.025, max_risk=0.08,
+    min_risk=0.025, max_risk=0.06,
     valid_days=20,
     k_pivot=5,
     warmup=200,
