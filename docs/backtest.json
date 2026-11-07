@@ -1,1 +1,239 @@
-{"ready": false}
+{
+ "ready": true,
+ "period": [
+  "2022-09-05",
+  "2026-11-06"
+ ],
+ "split_date": "2025-03-03",
+ "fees": {
+  "buy": 0.0015,
+  "sell": 0.0025
+ },
+ "overall": {
+  "n": 299,
+  "win_rate": 38.8,
+  "avg_win": 8.9,
+  "avg_loss": -6.3,
+  "expectancy": -0.4,
+  "avg_R": -0.13,
+  "profit_factor": 0.9,
+  "max_drawdown": -34.7,
+  "avg_hold": 11.6,
+  "total_return_1pct": -34.1
+ },
+ "in_sample": {
+  "n": 181,
+  "win_rate": 38.1,
+  "avg_win": 6.96,
+  "avg_loss": -5.85,
+  "expectancy": -0.97,
+  "avg_R": -0.21,
+  "profit_factor": 0.73,
+  "max_drawdown": -32.5,
+  "avg_hold": 12.4,
+  "total_return_1pct": -32.5
+ },
+ "out_of_sample": {
+  "n": 118,
+  "win_rate": 39.8,
+  "avg_win": 11.73,
+  "avg_loss": -6.99,
+  "expectancy": 0.47,
+  "avg_R": -0.01,
+  "profit_factor": 1.11,
+  "max_drawdown": -26.3,
+  "avg_hold": 10.4,
+  "total_return_1pct": -2.4
+ },
+ "by_threshold": {
+  "60": {
+   "n": 1461,
+   "win_rate": 34.7,
+   "avg_win": 9.3,
+   "avg_loss": -6.65,
+   "expectancy": -1.11,
+   "avg_R": -0.18,
+   "profit_factor": 0.74,
+   "max_drawdown": -93.6,
+   "avg_hold": 11.5,
+   "total_return_1pct": -93.5
+  },
+  "70": {
+   "n": 299,
+   "win_rate": 38.8,
+   "avg_win": 8.9,
+   "avg_loss": -6.3,
+   "expectancy": -0.4,
+   "avg_R": -0.13,
+   "profit_factor": 0.9,
+   "max_drawdown": -34.7,
+   "avg_hold": 11.6,
+   "total_return_1pct": -34.1
+  },
+  "80": {
+   "n": 1,
+   "win_rate": 0.0,
+   "avg_win": 0.0,
+   "avg_loss": -4.65,
+   "expectancy": -4.65,
+   "avg_R": -1.09,
+   "profit_factor": 0.0,
+   "max_drawdown": 0.0,
+   "avg_hold": 1.0,
+   "total_return_1pct": -1.1
+  }
+ },
+ "recent": [
+  {
+   "k": "PTBA",
+   "tgl": "2026-10-30",
+   "hasil": "SL",
+   "pct": -8.6
+  },
+  {
+   "k": "PTBA",
+   "tgl": "2026-10-16",
+   "hasil": "SL",
+   "pct": -13.2
+  },
+  {
+   "k": "BDMN",
+   "tgl": "2026-10-06",
+   "hasil": "TP2",
+   "pct": 7.5
+  },
+  {
+   "k": "TINS",
+   "tgl": "2026-09-28",
+   "hasil": "TP1",
+   "pct": 12.7
+  },
+  {
+   "k": "BBRI",
+   "tgl": "2026-09-22",
+   "hasil": "SL",
+   "pct": -4.6
+  },
+  {
+   "k": "GGRM",
+   "tgl": "2026-09-15",
+   "hasil": "SL",
+   "pct": -6.6
+  },
+  {
+   "k": "MTEL",
+   "tgl": "2026-09-14",
+   "hasil": "SL",
+   "pct": -4.1
+  },
+  {
+   "k": "ELSA",
+   "tgl": "2026-09-01",
+   "hasil": "Kedaluwarsa",
+   "pct": 4.6
+  },
+  {
+   "k": "MAPI",
+   "tgl": "2026-08-11",
+   "hasil": "SL",
+   "pct": -9.0
+  },
+  {
+   "k": "ENRG",
+   "tgl": "2026-07-28",
+   "hasil": "SL",
+   "pct": -8.5
+  },
+  {
+   "k": "MAPI",
+   "tgl": "2026-07-16",
+   "hasil": "SL",
+   "pct": -3.7
+  },
+  {
+   "k": "TINS",
+   "tgl": "2026-06-25",
+   "hasil": "SL",
+   "pct": -7.2
+  },
+  {
+   "k": "BDMN",
+   "tgl": "2026-06-08",
+   "hasil": "SL",
+   "pct": -8.6
+  },
+  {
+   "k": "ISAT",
+   "tgl": "2026-05-21",
+   "hasil": "SL",
+   "pct": -6.8
+  },
+  {
+   "k": "AKRA",
+   "tgl": "2026-05-19",
+   "hasil": "SL",
+   "pct": -6.5
+  },
+  {
+   "k": "INDF",
+   "tgl": "2026-05-12",
+   "hasil": "Kedaluwarsa",
+   "pct": 2.9
+  },
+  {
+   "k": "PTBA",
+   "tgl": "2026-05-11",
+   "hasil": "SL",
+   "pct": -7.4
+  },
+  {
+   "k": "ESSA",
+   "tgl": "2026-05-11",
+   "hasil": "SL",
+   "pct": -8.4
+  },
+  {
+   "k": "MEDC",
+   "tgl": "2026-05-07",
+   "hasil": "SL",
+   "pct": -8.7
+  },
+  {
+   "k": "ANTM",
+   "tgl": "2026-04-30",
+   "hasil": "SL",
+   "pct": -8.6
+  },
+  {
+   "k": "JPFA",
+   "tgl": "2026-04-28",
+   "hasil": "SL",
+   "pct": -8.6
+  },
+  {
+   "k": "CPIN",
+   "tgl": "2026-04-24",
+   "hasil": "SL",
+   "pct": -3.9
+  },
+  {
+   "k": "CUAN",
+   "tgl": "2026-04-24",
+   "hasil": "SL",
+   "pct": -8.7
+  },
+  {
+   "k": "UNTR",
+   "tgl": "2026-04-23",
+   "hasil": "Kedaluwarsa",
+   "pct": 5.2
+  },
+  {
+   "k": "PTBA",
+   "tgl": "2026-04-07",
+   "hasil": "TP1",
+   "pct": 5.2
+  }
+ ],
+ "demo": false
+}
