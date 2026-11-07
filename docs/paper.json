@@ -1,0 +1,13 @@
+{
+ "started": null,
+ "summary": {
+  "n_selesai": 0,
+  "n_berjalan": 0,
+  "n_menunggu": 0,
+  "win_rate": null,
+  "avg": null,
+  "pf": null
+ },
+ "log": [],
+ "trades": []
+}
