@@ -183,9 +183,9 @@ details[open] summary::after{transform:rotate(180deg)}
 
   <div id="cm" hidden role="dialog" aria-modal="true" aria-label="Chart saham">
   <div class="box">
-    <div class="bar"><b id="cmk"></b><span class="pl" id="cmp"></span><button id="cmx">Tutup</button></div>
+    <div class="bar"><b id="cmk"></b><span class="pl" id="cmp"></span><a id="cmo" target="_blank" rel="noopener" style="font-weight:600;color:#1a4bdc;white-space:nowrap">Buka di TradingView ↗</a><button id="cmx">Tutup</button></div>
     <div id="tv"></div>
-    <div class="tip">Klik <b>Indikator</b> di bagian atas chart untuk menambah EMA, RSI, ADX, volume, dll. Chart dari TradingView (gratis, data bisa tertunda). Garis Entry/SL/TP ada di bilah atas, belum digambar di chart.</div>
+    <div class="tip">Klik <b>Indikator</b> di bagian atas chart untuk menambah EMA, RSI, ADX, volume, dll. Chart dari TradingView (gratis, data bisa tertunda). Untuk indikator komunitas seperti Smart Money Concepts, klik <b>Buka di TradingView</b>. Garis Entry/SL/TP ada di bilah atas, belum digambar di chart.</div>
   </div>
 </div>
 <p class="disc">Alat bantu analisis, bukan nasihat investasi. Perdagangan saham berisiko rugi, dan hasil uji pada data masa lalu tidak menjamin hasil berikutnya. Data harian dari Yahoo Finance bisa terlambat atau keliru; cek ulang harga di aplikasi sekuritas Anda sebelum bertransaksi.</p>
@@ -303,11 +303,18 @@ function paperView(){
     <div class="hist" style="grid-column:1/-1">${rows}</div>`;
 }
 
+function marketBar(){
+  const m=SIG&&SIG.market;
+  if(!m)return '';
+  const t=m.above200?(m.above50?['Pasar kuat','good','IHSG di atas EMA 50 dan EMA 200. Kondisi lebih bersahabat untuk strategi beli.']:['Pasar ragu-ragu','warn','IHSG di atas EMA 200 tapi di bawah EMA 50. Kurangi ukuran posisi.']):['Pasar lemah','bad','IHSG di bawah EMA 200. Dari uji kita, sinyal beli paling sering rugi di kondisi ini. Menunggu (tunai) sering lebih baik.'];
+  return `<div class="size" style="grid-column:1/-1;margin:0 0 8px"><span class="pill ${t[1]}">${t[0]}</span> <span style="margin-left:6px">${t[2]} <small>(IHSG ${num(m.close)} · ${m.date})</small></span></div>`;
+}
+
 function arenaView(){
   if(!ARENA)return empty('Arena belum mulai','Pencatatan otomatis dimulai setelah pembaruan data berikutnya dijalankan di GitHub (Actions → Run workflow).');
   const V={lolos:['LOLOS','good'],gagal:['BELUM LOLOS','bad'],data:['DATA BELUM CUKUP','warn'],pembanding:['PEMBANDING','warn']};
   const tone=v=>v>0?'var(--good)':v<0?'var(--bad)':'var(--ink)';
-  const order=['santai','pullback','momentum','ai','acak'];
+  const order=['santai','pullback','momentum','momentum_f','ai','acak'];
   const cards=order.filter(k=>ARENA.strategies[k]).map(k=>{
     const s=ARENA.strategies[k],m=s.summary,[vl,vk]=V[s.verdict]||V.data;
     const today=(s.today||[]).map(t=>`<span class="chip code" data-chart="${t.k}" style="cursor:pointer">${t.k} · ${num(t.plan.entry)} / SL ${num(t.plan.sl)} / TP ${num(t.plan.tp1)}</span>`).join('');
@@ -323,7 +330,7 @@ function arenaView(){
       ${today?`<div class="chips">${today}</div>`:''}
       ${rows?`<details><summary>Transaksi terakhir</summary><div class="hist">${rows}</div></details>`:''}
     </article>`}).join('');
-  return `<div class="sect" style="margin-top:0">Arena strategi<small>Pencatatan sejak ${ARENA.started||'-'} · data sampai ${ARENA.last_date} · biaya 0,4% sudah dikurangi · belum ada strategi yang boleh dipakai dengan uang sungguhan sampai berstatus LOLOS</small></div>${cards}
+  return marketBar()+`<div class="sect" style="margin-top:0">Arena strategi<small>Pencatatan sejak ${ARENA.started||'-'} · data sampai ${ARENA.last_date} · biaya 0,4% sudah dikurangi · belum ada strategi yang boleh dipakai dengan uang sungguhan sampai berstatus LOLOS</small></div>${cards}
   <p class="intro" style="grid-column:1/-1;margin:6px 0 0">Daftar saham di kartu hanya untuk dipantau, bukan ajakan membeli. Klik kodenya untuk membuka chart.</p>`;
 }
 
@@ -372,7 +379,7 @@ function render(){
   if(S.tab==='arena'){view.innerHTML=arenaView();return}
   if(!SIG.generated){view.innerHTML=empty('Belum ada data','Jalankan pembaruan pertama di GitHub (Actions → Pembaruan harian → Run workflow). Panduan ada di README.');return}
   const list=SIG.stocks.filter(s=>s.mode==='santai');
-  view.innerHTML=list.length?list.map(card).join(''):empty('Hari ini tidak ada saham yang memenuhi syarat','Itu normal. Sinyal hanya muncul bila skor mencapai '+SIG.min_score+' dan saham lolos filter keselamatan (likuid, bukan gocap, tidak naik liar). Tidak ada sinyal berarti lebih baik menunggu.');
+  view.innerHTML=marketBar()+(list.length?list.map(card).join(''):empty('Hari ini tidak ada saham yang memenuhi syarat','Itu normal. Sinyal hanya muncul bila skor mencapai '+SIG.min_score+' dan saham lolos filter keselamatan (likuid, bukan gocap, tidak naik liar). Tidak ada sinyal berarti lebih baik menunggu.'));
 }
 
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{S.tab=t.dataset.tab;try{localStorage.setItem('sinyal-tab',S.tab)}catch(e){};render()}));
@@ -394,6 +401,7 @@ async function openChart(k){
   document.getElementById('cmk').textContent=k;
   const s=SIG&&SIG.stocks&&SIG.stocks.find(x=>x.k===k);
   document.getElementById('cmp').innerHTML=s?`<span>Entry <b>${num(s.plan.entry)}</b></span><span>SL <b>${num(s.plan.sl)}</b></span><span>TP1 <b>${num(s.plan.tp1)}</b></span><span>TP2 <b>${num(s.plan.tp2)}</b></span>`:'';
+  document.getElementById('cmo').href='https://www.tradingview.com/chart/?symbol=IDX%3A'+k;
   cm.hidden=false;document.body.style.overflow='hidden';
   tv.innerHTML='<p style="padding:20px">Memuat chart…</p>';
   try{

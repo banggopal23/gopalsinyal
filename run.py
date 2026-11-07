@@ -73,6 +73,22 @@ def fetch(code, tries=2):
     return code, None
 
 
+def market_state():
+    """Kondisi IHSG: di atas/bawah EMA 50 dan EMA 200. None bila data tidak bisa diunduh."""
+    try:
+        import yfinance as yf
+        from engine import ema
+        h = yf.Ticker("^JKSE").history(period="2y", interval="1d", auto_adjust=False, actions=False)
+        c = _clean(h)["close"]
+        if len(c) < 210:
+            return None
+        return dict(date=str(c.index[-1].date()), close=round(float(c.iloc[-1]), 1),
+                    above50=bool(c.iloc[-1] > ema(c, 50).iloc[-1]), above200=bool(c.iloc[-1] > ema(c, 200).iloc[-1]))
+    except Exception as e:
+        ERRORS.append(f"IHSG: {type(e).__name__}: {str(e)[:120]}")
+        return None
+
+
 def demo_data(codes, n=1300, seed=7):
     """Data acak untuk menguji program. Bukan data pasar."""
     rng = np.random.default_rng(seed)
@@ -145,6 +161,8 @@ def main():
     signals = dict(generated=wib.strftime("%Y-%m-%d %H:%M WIB"), last_data_date=str(latest.date()),
                    demo=a.demo, scanned=len(universe), passed_filter=passed, min_score=CFG["min_score"],
                    valid_days=CFG["valid_days"], stocks=stocks)
+    market = None if a.demo else market_state()
+    signals["market"] = market
     bt = run_backtest(universe)
     bt["demo"] = a.demo
 
@@ -154,7 +172,7 @@ def main():
     if not a.demo:
         try:
             print("Arena:", arena.update(os.path.join(a.out, "arena.json"), {c: d for c, (d, _) in universe.items()},
-                                         names, stocks, str(latest.date())))
+                                         names, stocks, str(latest.date()), market))
         except Exception as e:                      # arena tidak boleh menggagalkan pembaruan utama
             print("Arena gagal (diabaikan):", type(e).__name__, e)
     print(f"Sinyal hari ini: {len(stocks)} saham (dari {passed} yang lolos filter). Hasil ditulis ke folder '{a.out}'.")

@@ -14,6 +14,7 @@ INFO = {
     "santai": ("Santai (skor 70+)", "Tren naik + akumulasi + dekat support. Aturan yang sudah ada.", "Santai"),
     "pullback": ("Koreksi dalam tren naik", "RSI14 di bawah 35 saat harga masih di atas EMA 200. Keluar cepat (maks 7 hari).", "Koreksi"),
     "momentum": ("Momentum 60 hari", "Saham yang baru masuk 10 terkuat (kenaikan 60 hari). Ditahan maks 20 hari.", "Momentum"),
+    "momentum_f": ("Momentum + filter pasar", "Momentum 60 hari yang sama, tapi hanya bila IHSG di atas EMA 200; kalau tidak, tunai (tidak ada sinyal).", "Momentum+"),
     "ai": ("AI (gradient boosting)", "Model belajar dari riwayat harga dan dilatih ulang tiap hari; memilih 3 saham dengan peluang tertinggi.", "AI"),
     "acak": ("Pembanding acak", "3 saham likuid acak per hari. Strategi yang tidak mengalahkan ini berarti tidak punya keunggulan.", "Acak"),
 }
@@ -50,7 +51,7 @@ def _panel(feats, col):
     return pd.concat({k: f[col] for k, f in feats.items()}, axis=1)
 
 
-def candidates(universe_df, names, santai, last_date):
+def candidates(universe_df, names, santai, last_date, market=None):
     """Sinyal hari ini untuk tiap strategi. Mengembalikan {strategi: [ {k,nm,score?,plan} ]}."""
     feats = {k: _feat(df) for k, df in universe_df.items() if len(df) > 260}
     t = pd.Timestamp(last_date)
@@ -73,6 +74,8 @@ def candidates(universe_df, names, santai, last_date):
             p = _plan(r.close, r.atr, 2.5, 0, 20)
             p["tp1"] = p["tp2"] = snap(r.close * 1.5, "up")           # praktis hanya keluar karena waktu/SL
             out["momentum"].append(dict(k=k, nm=names.get(k, k), plan=p))
+
+    out["momentum_f"] = list(out.get("momentum", [])) if (market and market.get("above200")) else []
 
     rng = np.random.default_rng(int(t.strftime("%Y%m%d")))
     keys = sorted(now)
@@ -121,14 +124,14 @@ def _summ(trades):
                 pf=round(sum(w) / -sum(l), 2) if l and sum(l) < 0 else None)
 
 
-def update(path, universe_df, names, santai, last_date):
+def update(path, universe_df, names, santai, last_date, market=None):
     old = {}
     if os.path.exists(path):
         try:
             old = json.load(open(path, encoding="utf-8"))
         except Exception:
             old = {}
-    cand = candidates(universe_df, names, santai, last_date)
+    cand = candidates(universe_df, names, santai, last_date, market)
     res = {}
     for key, (label, desc, short) in INFO.items():
         log = old.get("strategies", {}).get(key, {}).get("log", [])
@@ -160,6 +163,6 @@ def update(path, universe_df, names, santai, last_date):
         else:
             v["verdict"] = "gagal"
     started = min((x["sig"] for v in res.values() for x in v["log"]), default=None)
-    json.dump(dict(started=started, rules=LULUS, last_date=last_date, strategies=res),
+    json.dump(dict(started=started, rules=LULUS, last_date=last_date, market=market, strategies=res),
               open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=1, allow_nan=False, default=float)
     return {k: (v["verdict"], v["summary"]["n_selesai"]) for k, v in res.items()}
