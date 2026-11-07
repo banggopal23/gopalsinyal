@@ -30,9 +30,60 @@
    "verdict": "data"
   },
   "pullback": {
-   "label": "Koreksi dalam tren naik",
-   "desc": "RSI14 di bawah 35 saat harga masih di atas EMA 200. Keluar cepat (maks 7 hari).",
+   "label": "Koreksi dalam tren naik (RSI<35)",
+   "desc": "RSI14 di bawah 35 saat harga masih di atas EMA 200. SL 2 ATR, target 3 ATR, maks 10 hari.",
    "short": "Koreksi",
+   "summary": {
+    "n_selesai": 0,
+    "n_berjalan": 0,
+    "n_menunggu": 1,
+    "win_rate": null,
+    "avg": null,
+    "pf": null
+   },
+   "log": [
+    {
+     "k": "SGER",
+     "nm": "SGER",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 610.0,
+      "sl": 505.0,
+      "tp1": 765.0,
+      "tp2": 765.0,
+      "risk": 105.0,
+      "days": 10
+     }
+    }
+   ],
+   "today": [
+    {
+     "k": "SGER",
+     "nm": "SGER",
+     "plan": {
+      "entry": 610.0,
+      "sl": 505.0,
+      "tp1": 765.0,
+      "tp2": 765.0,
+      "risk": 105.0,
+      "days": 10
+     }
+    }
+   ],
+   "trades": [
+    {
+     "k": "SGER",
+     "nm": "SGER",
+     "sig": "2026-11-06",
+     "status": "menunggu"
+    }
+   ],
+   "verdict": "data"
+  },
+  "pullback30": {
+   "label": "Koreksi dalam (RSI<30)",
+   "desc": "Versi lebih ketat: RSI14 di bawah 30 saat harga masih di atas EMA 200. Sinyal jarang tapi uji data lama paling menjanjikan.",
+   "short": "Koreksi30",
    "summary": {
     "n_selesai": 0,
     "n_berjalan": 0,
@@ -53,7 +104,7 @@
    "summary": {
     "n_selesai": 0,
     "n_berjalan": 0,
-    "n_menunggu": 1,
+    "n_menunggu": 2,
     "win_rate": null,
     "avg": null,
     "pf": null
@@ -71,23 +122,42 @@
       "risk": 28.0,
       "days": 20
      }
+    },
+    {
+     "k": "MBSS",
+     "nm": "MBSS",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 3620.0,
+      "sl": 2670.0,
+      "tp1": 5450.0,
+      "tp2": 5450.0,
+      "risk": 950.0,
+      "days": 20
+     }
     }
    ],
    "today": [
     {
-     "k": "PWON",
-     "nm": "Pakuwon Jati",
+     "k": "MBSS",
+     "nm": "MBSS",
      "plan": {
-      "entry": 258.0,
-      "sl": 230.0,
-      "tp1": 388.0,
-      "tp2": 388.0,
-      "risk": 28.0,
+      "entry": 3620.0,
+      "sl": 2670.0,
+      "tp1": 5450.0,
+      "tp2": 5450.0,
+      "risk": 950.0,
       "days": 20
      }
     }
    ],
    "trades": [
+    {
+     "k": "MBSS",
+     "nm": "MBSS",
+     "sig": "2026-11-06",
+     "status": "menunggu"
+    },
     {
      "k": "PWON",
      "nm": "Pakuwon Jati",
@@ -97,23 +167,6 @@
    ],
    "verdict": "data"
   },
-  "momentum_f": {
-   "label": "Momentum + filter pasar",
-   "desc": "Momentum 60 hari yang sama, tapi hanya bila IHSG di atas EMA 200; kalau tidak, tunai (tidak ada sinyal).",
-   "short": "Momentum+",
-   "summary": {
-    "n_selesai": 0,
-    "n_berjalan": 0,
-    "n_menunggu": 0,
-    "win_rate": null,
-    "avg": null,
-    "pf": null
-   },
-   "log": [],
-   "today": [],
-   "trades": [],
-   "verdict": "data"
-  },
   "ai": {
    "label": "AI (gradient boosting)",
    "desc": "Model belajar dari riwayat harga dan dilatih ulang tiap hari; memilih 3 saham dengan peluang tertinggi.",
@@ -121,7 +174,7 @@
    "summary": {
     "n_selesai": 0,
     "n_berjalan": 0,
-    "n_menunggu": 3,
+    "n_menunggu": 6,
     "win_rate": null,
     "avg": null,
     "pf": null
@@ -168,50 +221,113 @@
       "days": 10
      },
      "prob": 0.58
+    },
+    {
+     "k": "BRMS",
+     "nm": "Bumi Resources Minerals",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 318.0,
+      "sl": 254.0,
+      "tp1": 414.0,
+      "tp2": 414.0,
+      "risk": 64.0,
+      "days": 10
+     },
+     "prob": 0.668
+    },
+    {
+     "k": "PTRO",
+     "nm": "PTRO",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 2010.0,
+      "sl": 1495.0,
+      "tp1": 2790.0,
+      "tp2": 2790.0,
+      "risk": 515.0,
+      "days": 10
+     },
+     "prob": 0.658
+    },
+    {
+     "k": "RAJA",
+     "nm": "RAJA",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 392.0,
+      "sl": 308.0,
+      "tp1": 520.0,
+      "tp2": 520.0,
+      "risk": 84.0,
+      "days": 10
+     },
+     "prob": 0.633
     }
    ],
    "today": [
     {
-     "k": "EXCL",
-     "nm": "XL Axiata",
-     "prob": 0.602,
+     "k": "BRMS",
+     "nm": "Bumi Resources Minerals",
+     "prob": 0.668,
      "plan": {
-      "entry": 1495.0,
-      "sl": 1275.0,
-      "tp1": 1825.0,
-      "tp2": 1825.0,
-      "risk": 220.0,
+      "entry": 318.0,
+      "sl": 254.0,
+      "tp1": 414.0,
+      "tp2": 414.0,
+      "risk": 64.0,
       "days": 10
      }
     },
     {
-     "k": "BRIS",
-     "nm": "Bank Syariah Indonesia",
-     "prob": 0.586,
+     "k": "PTRO",
+     "nm": "PTRO",
+     "prob": 0.658,
      "plan": {
-      "entry": 1150.0,
-      "sl": 1015.0,
-      "tp1": 1350.0,
-      "tp2": 1350.0,
-      "risk": 135.0,
+      "entry": 2010.0,
+      "sl": 1495.0,
+      "tp1": 2790.0,
+      "tp2": 2790.0,
+      "risk": 515.0,
       "days": 10
      }
     },
     {
-     "k": "BRPT",
-     "nm": "Barito Pacific",
-     "prob": 0.58,
+     "k": "RAJA",
+     "nm": "RAJA",
+     "prob": 0.633,
      "plan": {
-      "entry": 850.0,
-      "sl": 660.0,
-      "tp1": 1135.0,
-      "tp2": 1135.0,
-      "risk": 190.0,
+      "entry": 392.0,
+      "sl": 308.0,
+      "tp1": 520.0,
+      "tp2": 520.0,
+      "risk": 84.0,
       "days": 10
      }
     }
    ],
    "trades": [
+    {
+     "k": "RAJA",
+     "nm": "RAJA",
+     "sig": "2026-11-06",
+     "prob": 0.633,
+     "status": "menunggu"
+    },
+    {
+     "k": "PTRO",
+     "nm": "PTRO",
+     "sig": "2026-11-06",
+     "prob": 0.658,
+     "status": "menunggu"
+    },
+    {
+     "k": "BRMS",
+     "nm": "Bumi Resources Minerals",
+     "sig": "2026-11-06",
+     "prob": 0.668,
+     "status": "menunggu"
+    },
     {
      "k": "BRPT",
      "nm": "Barito Pacific",
@@ -243,7 +359,7 @@
    "summary": {
     "n_selesai": 0,
     "n_berjalan": 0,
-    "n_menunggu": 3,
+    "n_menunggu": 6,
     "win_rate": null,
     "avg": null,
     "pf": null
@@ -287,47 +403,104 @@
       "risk": 120.0,
       "days": 10
      }
+    },
+    {
+     "k": "DSSA",
+     "nm": "DSSA",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 600.0,
+      "sl": 476.0,
+      "tp1": 785.0,
+      "tp2": 785.0,
+      "risk": 124.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "BRPT",
+     "nm": "Barito Pacific",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 850.0,
+      "sl": 660.0,
+      "tp1": 1135.0,
+      "tp2": 1135.0,
+      "risk": 190.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "ASII",
+     "nm": "Astra International",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 5000.0,
+      "sl": 4610.0,
+      "tp1": 5600.0,
+      "tp2": 5600.0,
+      "risk": 390.0,
+      "days": 10
+     }
     }
    ],
    "today": [
     {
-     "k": "CUAN",
-     "nm": "Petrindo Jaya Kreasi",
+     "k": "DSSA",
+     "nm": "DSSA",
      "plan": {
-      "entry": 358.0,
-      "sl": 264.0,
-      "tp1": 498.0,
-      "tp2": 498.0,
-      "risk": 94.0,
+      "entry": 600.0,
+      "sl": 476.0,
+      "tp1": 785.0,
+      "tp2": 785.0,
+      "risk": 124.0,
       "days": 10
      }
     },
     {
-     "k": "BJTM",
-     "nm": "Bank Jatim",
+     "k": "BRPT",
+     "nm": "Barito Pacific",
      "plan": {
-      "entry": 492.0,
-      "sl": 472.0,
-      "tp1": 525.0,
-      "tp2": 525.0,
-      "risk": 20.0,
+      "entry": 850.0,
+      "sl": 660.0,
+      "tp1": 1135.0,
+      "tp2": 1135.0,
+      "risk": 190.0,
       "days": 10
      }
     },
     {
-     "k": "AMRT",
-     "nm": "Sumber Alfaria Trijaya",
+     "k": "ASII",
+     "nm": "Astra International",
      "plan": {
-      "entry": 975.0,
-      "sl": 855.0,
-      "tp1": 1155.0,
-      "tp2": 1155.0,
-      "risk": 120.0,
+      "entry": 5000.0,
+      "sl": 4610.0,
+      "tp1": 5600.0,
+      "tp2": 5600.0,
+      "risk": 390.0,
       "days": 10
      }
     }
    ],
    "trades": [
+    {
+     "k": "ASII",
+     "nm": "Astra International",
+     "sig": "2026-11-06",
+     "status": "menunggu"
+    },
+    {
+     "k": "BRPT",
+     "nm": "Barito Pacific",
+     "sig": "2026-11-06",
+     "status": "menunggu"
+    },
+    {
+     "k": "DSSA",
+     "nm": "DSSA",
+     "sig": "2026-11-06",
+     "status": "menunggu"
+    },
     {
      "k": "AMRT",
      "nm": "Sumber Alfaria Trijaya",
