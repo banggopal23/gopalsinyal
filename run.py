@@ -6,7 +6,6 @@ Pemakaian:
     python run.py --out folder    # simpan hasil ke folder lain (bawaan: docs)
 """
 import argparse, datetime as dt, json, os, sys, time
-from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 import pandas as pd
@@ -28,23 +27,48 @@ def load_tickers(path="tickers.txt"):
     return out
 
 
-def fetch(code, tries=3):
+ERRORS = []
+
+
+def _clean(df):
+    df = df.rename(columns=str.lower)[["open", "high", "low", "close", "volume"]].copy()
+    idx = pd.to_datetime(df.index)
+    if getattr(idx, "tz", None) is not None:
+        idx = idx.tz_localize(None)
+    df.index = idx.normalize()
+    df = df[~df.index.duplicated(keep="last")].dropna(subset=["close", "open", "high", "low"])
+    df["volume"] = df["volume"].fillna(0)
+    return df
+
+
+def fetch_yf(code):
+    import yfinance as yf                      # lebih tahan dibatasi Yahoo daripada permintaan biasa
+    h = yf.Ticker(code + ".JK").history(period="5y", interval="1d", auto_adjust=False, actions=False)
+    if h is None or h.empty:
+        raise RuntimeError("yfinance mengembalikan data kosong")
+    return _clean(h)
+
+
+def fetch_http(code):
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.JK"
+    r = requests.get(url, params={"range": "5y", "interval": "1d"}, headers=HEADERS, timeout=30)
+    if r.status_code != 200:
+        raise RuntimeError(f"HTTP {r.status_code}: {r.text[:120]!r}")
+    res = r.json()["chart"]["result"][0]
+    q = res["indicators"]["quote"][0]
+    idx = pd.to_datetime(res["timestamp"], unit="s", utc=True).tz_convert("Asia/Jakarta")
+    return _clean(pd.DataFrame({"open": q["open"], "high": q["high"], "low": q["low"],
+                                "close": q["close"], "volume": q["volume"]}, index=idx))
+
+
+def fetch(code, tries=2):
     for k in range(tries):
-        try:
-            r = requests.get(url, params={"range": "5y", "interval": "1d"}, headers=HEADERS, timeout=30)
-            if r.status_code == 200:
-                res = r.json()["chart"]["result"][0]
-                q = res["indicators"]["quote"][0]
-                idx = pd.to_datetime(res["timestamp"], unit="s", utc=True).tz_convert("Asia/Jakarta").tz_localize(None).normalize()
-                df = pd.DataFrame({"open": q["open"], "high": q["high"], "low": q["low"],
-                                   "close": q["close"], "volume": q["volume"]}, index=idx)
-                df = df[~df.index.duplicated(keep="last")].dropna(subset=["close", "open", "high", "low"])
-                df["volume"] = df["volume"].fillna(0)
-                return code, df
-        except Exception:
-            pass
-        time.sleep(2 * (k + 1))
+        for fn in (fetch_yf, fetch_http):
+            try:
+                return code, fn(code)
+            except Exception as e:
+                ERRORS.append(f"{code} [{fn.__name__}]: {type(e).__name__}: {str(e)[:160]}")
+        time.sleep(3 * (k + 1))
     return code, None
 
 
@@ -77,10 +101,22 @@ def main():
     if a.demo:
         data = demo_data(codes)
     else:
-        with ThreadPoolExecutor(max_workers=4) as ex:
-            data = {c: d for c, d in ex.map(fetch, codes) if d is not None and len(d) > CFG["warmup"] + 60}
-        failed = len(codes) - len(data)
+        data, fails = {}, 0
+        for i, c in enumerate(codes):
+            code, df = fetch(c)
+            if df is not None and len(df) > CFG["warmup"] + 60:
+                data[code] = df
+                fails = 0
+            else:
+                fails += 1
+            if len(data) == 0 and fails >= 6:
+                print("Enam saham pertama gagal semua. Contoh penyebab:")
+                print("\n".join(ERRORS[:6]))
+                sys.exit("Data tidak bisa diunduh dari server ini. Data lama dibiarkan.")
+            time.sleep(0.4)
         print(f"Data berhasil: {len(data)} dari {len(codes)} saham")
+        if ERRORS:
+            print("Contoh kegagalan:", *ERRORS[:5], sep="\n  ")
         if len(data) < len(codes) * 0.5:
             sys.exit("Terlalu banyak saham gagal diunduh (kemungkinan Yahoo Finance membatasi akses). Data lama dibiarkan.")
 
