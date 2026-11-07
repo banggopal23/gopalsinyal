@@ -1,1 +1,16 @@
-{"generated": null, "last_data_date": null, "demo": false, "scanned": 0, "passed_filter": 0, "min_score": 70, "valid_days": 20, "stocks": []}
+{
+ "generated": "2026-11-07 17:22 WIB",
+ "last_data_date": "2026-11-06",
+ "demo": false,
+ "scanned": 92,
+ "passed_filter": 6,
+ "min_score": 70,
+ "valid_days": 20,
+ "stocks": [],
+ "market": {
+  "date": "2026-11-06",
+  "close": 5050.4,
+  "above50": false,
+  "above200": false
+ }
+}

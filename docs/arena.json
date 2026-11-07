@@ -5,6 +5,12 @@
   "min_pf": 1.3
  },
  "last_date": "2026-11-06",
+ "market": {
+  "date": "2026-11-06",
+  "close": 5050.4,
+  "above50": false,
+  "above200": false
+ },
  "strategies": {
   "santai": {
    "label": "Santai (skor 70+)",
@@ -89,6 +95,23 @@
      "status": "menunggu"
     }
    ],
+   "verdict": "data"
+  },
+  "momentum_f": {
+   "label": "Momentum + filter pasar",
+   "desc": "Momentum 60 hari yang sama, tapi hanya bila IHSG di atas EMA 200; kalau tidak, tunai (tidak ada sinyal).",
+   "short": "Momentum+",
+   "summary": {
+    "n_selesai": 0,
+    "n_berjalan": 0,
+    "n_menunggu": 0,
+    "win_rate": null,
+    "avg": null,
+    "pf": null
+   },
+   "log": [],
+   "today": [],
+   "trades": [],
    "verdict": "data"
   },
   "ai": {
