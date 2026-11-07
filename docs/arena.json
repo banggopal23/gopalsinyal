@@ -1,0 +1,330 @@
+{
+ "started": "2026-11-06",
+ "rules": {
+  "min_selesai": 30,
+  "min_pf": 1.3
+ },
+ "last_date": "2026-11-06",
+ "strategies": {
+  "santai": {
+   "label": "Santai (skor 70+)",
+   "desc": "Tren naik + akumulasi + dekat support. Aturan yang sudah ada.",
+   "short": "Santai",
+   "summary": {
+    "n_selesai": 0,
+    "n_berjalan": 0,
+    "n_menunggu": 0,
+    "win_rate": null,
+    "avg": null,
+    "pf": null
+   },
+   "log": [],
+   "today": [],
+   "trades": [],
+   "verdict": "data"
+  },
+  "pullback": {
+   "label": "Koreksi dalam tren naik",
+   "desc": "RSI14 di bawah 35 saat harga masih di atas EMA 200. Keluar cepat (maks 7 hari).",
+   "short": "Koreksi",
+   "summary": {
+    "n_selesai": 0,
+    "n_berjalan": 0,
+    "n_menunggu": 0,
+    "win_rate": null,
+    "avg": null,
+    "pf": null
+   },
+   "log": [],
+   "today": [],
+   "trades": [],
+   "verdict": "data"
+  },
+  "momentum": {
+   "label": "Momentum 60 hari",
+   "desc": "Saham yang baru masuk 10 terkuat (kenaikan 60 hari). Ditahan maks 20 hari.",
+   "short": "Momentum",
+   "summary": {
+    "n_selesai": 0,
+    "n_berjalan": 0,
+    "n_menunggu": 1,
+    "win_rate": null,
+    "avg": null,
+    "pf": null
+   },
+   "log": [
+    {
+     "k": "PWON",
+     "nm": "Pakuwon Jati",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 258.0,
+      "sl": 230.0,
+      "tp1": 388.0,
+      "tp2": 388.0,
+      "risk": 28.0,
+      "days": 20
+     }
+    }
+   ],
+   "today": [
+    {
+     "k": "PWON",
+     "nm": "Pakuwon Jati",
+     "plan": {
+      "entry": 258.0,
+      "sl": 230.0,
+      "tp1": 388.0,
+      "tp2": 388.0,
+      "risk": 28.0,
+      "days": 20
+     }
+    }
+   ],
+   "trades": [
+    {
+     "k": "PWON",
+     "nm": "Pakuwon Jati",
+     "sig": "2026-11-06",
+     "status": "menunggu"
+    }
+   ],
+   "verdict": "data"
+  },
+  "ai": {
+   "label": "AI (gradient boosting)",
+   "desc": "Model belajar dari riwayat harga dan dilatih ulang tiap hari; memilih 3 saham dengan peluang tertinggi.",
+   "short": "AI",
+   "summary": {
+    "n_selesai": 0,
+    "n_berjalan": 0,
+    "n_menunggu": 3,
+    "win_rate": null,
+    "avg": null,
+    "pf": null
+   },
+   "log": [
+    {
+     "k": "EXCL",
+     "nm": "XL Axiata",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 1495.0,
+      "sl": 1275.0,
+      "tp1": 1825.0,
+      "tp2": 1825.0,
+      "risk": 220.0,
+      "days": 10
+     },
+     "prob": 0.602
+    },
+    {
+     "k": "BRIS",
+     "nm": "Bank Syariah Indonesia",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 1150.0,
+      "sl": 1015.0,
+      "tp1": 1350.0,
+      "tp2": 1350.0,
+      "risk": 135.0,
+      "days": 10
+     },
+     "prob": 0.586
+    },
+    {
+     "k": "BRPT",
+     "nm": "Barito Pacific",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 850.0,
+      "sl": 660.0,
+      "tp1": 1135.0,
+      "tp2": 1135.0,
+      "risk": 190.0,
+      "days": 10
+     },
+     "prob": 0.58
+    }
+   ],
+   "today": [
+    {
+     "k": "EXCL",
+     "nm": "XL Axiata",
+     "prob": 0.602,
+     "plan": {
+      "entry": 1495.0,
+      "sl": 1275.0,
+      "tp1": 1825.0,
+      "tp2": 1825.0,
+      "risk": 220.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "BRIS",
+     "nm": "Bank Syariah Indonesia",
+     "prob": 0.586,
+     "plan": {
+      "entry": 1150.0,
+      "sl": 1015.0,
+      "tp1": 1350.0,
+      "tp2": 1350.0,
+      "risk": 135.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "BRPT",
+     "nm": "Barito Pacific",
+     "prob": 0.58,
+     "plan": {
+      "entry": 850.0,
+      "sl": 660.0,
+      "tp1": 1135.0,
+      "tp2": 1135.0,
+      "risk": 190.0,
+      "days": 10
+     }
+    }
+   ],
+   "trades": [
+    {
+     "k": "BRPT",
+     "nm": "Barito Pacific",
+     "sig": "2026-11-06",
+     "prob": 0.58,
+     "status": "menunggu"
+    },
+    {
+     "k": "BRIS",
+     "nm": "Bank Syariah Indonesia",
+     "sig": "2026-11-06",
+     "prob": 0.586,
+     "status": "menunggu"
+    },
+    {
+     "k": "EXCL",
+     "nm": "XL Axiata",
+     "sig": "2026-11-06",
+     "prob": 0.602,
+     "status": "menunggu"
+    }
+   ],
+   "verdict": "data"
+  },
+  "acak": {
+   "label": "Pembanding acak",
+   "desc": "3 saham likuid acak per hari. Strategi yang tidak mengalahkan ini berarti tidak punya keunggulan.",
+   "short": "Acak",
+   "summary": {
+    "n_selesai": 0,
+    "n_berjalan": 0,
+    "n_menunggu": 3,
+    "win_rate": null,
+    "avg": null,
+    "pf": null
+   },
+   "log": [
+    {
+     "k": "CUAN",
+     "nm": "Petrindo Jaya Kreasi",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 358.0,
+      "sl": 264.0,
+      "tp1": 498.0,
+      "tp2": 498.0,
+      "risk": 94.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "BJTM",
+     "nm": "Bank Jatim",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 492.0,
+      "sl": 472.0,
+      "tp1": 525.0,
+      "tp2": 525.0,
+      "risk": 20.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "AMRT",
+     "nm": "Sumber Alfaria Trijaya",
+     "sig": "2026-11-06",
+     "plan": {
+      "entry": 975.0,
+      "sl": 855.0,
+      "tp1": 1155.0,
+      "tp2": 1155.0,
+      "risk": 120.0,
+      "days": 10
+     }
+    }
+   ],
+   "today": [
+    {
+     "k": "CUAN",
+     "nm": "Petrindo Jaya Kreasi",
+     "plan": {
+      "entry": 358.0,
+      "sl": 264.0,
+      "tp1": 498.0,
+      "tp2": 498.0,
+      "risk": 94.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "BJTM",
+     "nm": "Bank Jatim",
+     "plan": {
+      "entry": 492.0,
+      "sl": 472.0,
+      "tp1": 525.0,
+      "tp2": 525.0,
+      "risk": 20.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "AMRT",
+     "nm": "Sumber Alfaria Trijaya",
+     "plan": {
+      "entry": 975.0,
+      "sl": 855.0,
+      "tp1": 1155.0,
+      "tp2": 1155.0,
+      "risk": 120.0,
+      "days": 10
+     }
+    }
+   ],
+   "trades": [
+    {
+     "k": "AMRT",
+     "nm": "Sumber Alfaria Trijaya",
+     "sig": "2026-11-06",
+     "status": "menunggu"
+    },
+    {
+     "k": "BJTM",
+     "nm": "Bank Jatim",
+     "sig": "2026-11-06",
+     "status": "menunggu"
+    },
+    {
+     "k": "CUAN",
+     "nm": "Petrindo Jaya Kreasi",
+     "sig": "2026-11-06",
+     "status": "menunggu"
+    }
+   ],
+   "verdict": "pembanding"
+  }
+ }
+}
