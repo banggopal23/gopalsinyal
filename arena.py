@@ -12,9 +12,9 @@ LULUS = dict(min_selesai=30, min_pf=1.3)
 
 INFO = {
     "santai": ("Santai (skor 70+)", "Tren naik + akumulasi + dekat support. Aturan yang sudah ada.", "Santai"),
-    "pullback": ("Koreksi dalam tren naik", "RSI14 di bawah 35 saat harga masih di atas EMA 200. Keluar cepat (maks 7 hari).", "Koreksi"),
+    "pullback": ("Koreksi dalam tren naik (RSI<35)", "RSI14 di bawah 35 saat harga masih di atas EMA 200. SL 2 ATR, target 3 ATR, maks 10 hari.", "Koreksi"),
+    "pullback30": ("Koreksi dalam (RSI<30)", "Versi lebih ketat: RSI14 di bawah 30 saat harga masih di atas EMA 200. Sinyal jarang tapi uji data lama paling menjanjikan.", "Koreksi30"),
     "momentum": ("Momentum 60 hari", "Saham yang baru masuk 10 terkuat (kenaikan 60 hari). Ditahan maks 20 hari.", "Momentum"),
-    "momentum_f": ("Momentum + filter pasar", "Momentum 60 hari yang sama, tapi hanya bila IHSG di atas EMA 200; kalau tidak, tunai (tidak ada sinyal).", "Momentum+"),
     "ai": ("AI (gradient boosting)", "Model belajar dari riwayat harga dan dilatih ulang tiap hari; memilih 3 saham dengan peluang tertinggi.", "AI"),
     "acak": ("Pembanding acak", "3 saham likuid acak per hari. Strategi yang tidak mengalahkan ini berarti tidak punya keunggulan.", "Acak"),
 }
@@ -58,8 +58,9 @@ def candidates(universe_df, names, santai, last_date, market=None):
     now = {k: f.loc[t] for k, f in feats.items() if t in f.index and bool(f.loc[t, "liq"]) and pd.notna(f.loc[t, "atr"])}
     out = {"santai": [dict(k=s["k"], nm=s["nm"], plan={**s["plan"], "days": 20}) for s in santai]}
 
-    pb = [k for k, r in now.items() if r.rsi14 < 35 and r.close > r.ema200]
-    out["pullback"] = [dict(k=k, nm=names.get(k, k), plan=_plan(now[k].close, now[k].atr, 1.5, 1.5, 7)) for k in pb]
+    for key, thr in (("pullback", 35), ("pullback30", 30)):
+        pb = [k for k, r in now.items() if r.rsi14 < thr and r.close > r.ema200]
+        out[key] = [dict(k=k, nm=names.get(k, k), plan=_plan(now[k].close, now[k].atr, 2.0, 3.0, 10)) for k in pb]
 
     r60 = _panel(feats, "ret60")
     liq = _panel(feats, "liq").fillna(False)
@@ -74,8 +75,6 @@ def candidates(universe_df, names, santai, last_date, market=None):
             p = _plan(r.close, r.atr, 2.5, 0, 20)
             p["tp1"] = p["tp2"] = snap(r.close * 1.5, "up")           # praktis hanya keluar karena waktu/SL
             out["momentum"].append(dict(k=k, nm=names.get(k, k), plan=p))
-
-    out["momentum_f"] = list(out.get("momentum", [])) if (market and market.get("above200")) else []
 
     rng = np.random.default_rng(int(t.strftime("%Y%m%d")))
     keys = sorted(now)

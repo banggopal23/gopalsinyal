@@ -44,7 +44,7 @@ def _clean(df):
 
 def fetch_yf(code):
     import yfinance as yf                      # lebih tahan dibatasi Yahoo daripada permintaan biasa
-    h = yf.Ticker(code + ".JK").history(period="5y", interval="1d", auto_adjust=False, actions=False)
+    h = yf.Ticker(code + ".JK").history(period="10y", interval="1d", auto_adjust=False, actions=False)
     if h is None or h.empty:
         raise RuntimeError("yfinance mengembalikan data kosong")
     return _clean(h)
@@ -52,7 +52,7 @@ def fetch_yf(code):
 
 def fetch_http(code):
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.JK"
-    r = requests.get(url, params={"range": "5y", "interval": "1d"}, headers=HEADERS, timeout=30)
+    r = requests.get(url, params={"range": "10y", "interval": "1d"}, headers=HEADERS, timeout=30)
     if r.status_code != 200:
         raise RuntimeError(f"HTTP {r.status_code}: {r.text[:120]!r}")
     res = r.json()["chart"]["result"][0]

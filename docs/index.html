@@ -314,7 +314,7 @@ function arenaView(){
   if(!ARENA)return empty('Arena belum mulai','Pencatatan otomatis dimulai setelah pembaruan data berikutnya dijalankan di GitHub (Actions → Run workflow).');
   const V={lolos:['LOLOS','good'],gagal:['BELUM LOLOS','bad'],data:['DATA BELUM CUKUP','warn'],pembanding:['PEMBANDING','warn']};
   const tone=v=>v>0?'var(--good)':v<0?'var(--bad)':'var(--ink)';
-  const order=['santai','pullback','momentum','momentum_f','ai','acak'];
+  const order=['santai','pullback','pullback30','momentum','ai','acak'];
   const cards=order.filter(k=>ARENA.strategies[k]).map(k=>{
     const s=ARENA.strategies[k],m=s.summary,[vl,vk]=V[s.verdict]||V.data;
     const today=(s.today||[]).map(t=>`<span class="chip code" data-chart="${t.k}" style="cursor:pointer">${t.k} · ${num(t.plan.entry)} / SL ${num(t.plan.sl)} / TP ${num(t.plan.tp1)}</span>`).join('');

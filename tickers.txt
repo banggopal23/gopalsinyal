@@ -1,101 +1,383 @@
 # Daftar saham yang dipindai. Format: KODE,Nama. Boleh tambah/hapus baris sendiri (tanpa ".JK").
-# Perbankan
-BBCA,Bank Central Asia
-BBRI,Bank Rakyat Indonesia
-BMRI,Bank Mandiri
-BBNI,Bank Negara Indonesia
-BRIS,Bank Syariah Indonesia
-BBTN,Bank Tabungan Negara
+AALI,Astra Agro Lestari
+ABMM,ABMM
+ACES,Aspirasi Hidup Indonesia
+ADHI,Adhi Karya
+ADMR,Adaro Minerals Indonesia
+ADRO,Adaro Energy
+AGII,AGII
+AGRO,AGRO
+AHAP,AHAP
+AISA,AISA
+AKPI,AKPI
+AKRA,AKR Corporindo
+AMAG,AMAG
+AMMN,Amman Mineral Internasional
+AMRT,Sumber Alfaria Trijaya
+ANJT,ANJT
+ANTM,Aneka Tambang
+APIC,APIC
+APLN,APLN
+ARNA,ARNA
 ARTO,Bank Jago
-BNGA,Bank CIMB Niaga
+ASII,Astra International
+ASRI,Alam Sutera Realty
+ASSA,ASSA
+AUTO,Astra Otoparts
+AVIA,Avia Avian
+BABP,BABP
+BACA,BACA
+BAPA,BAPA
+BBCA,Bank Central Asia
+BBHI,BBHI
+BBKP,BBKP
+BBNI,Bank Negara Indonesia
+BBRI,Bank Rakyat Indonesia
+BBTN,Bank Tabungan Negara
+BBYB,BBYB
+BCAP,BCAP
+BCIC,BCIC
 BDMN,Bank Danamon
-NISP,Bank OCBC NISP
-MEGA,Bank Mega
-PNBN,Bank Pan Indonesia
+BEKS,BEKS
+BEST,BEST
+BFIN,BFIN
+BGTG,BGTG
+BHIT,BHIT
+BIPI,BIPI
+BIRD,BIRD
+BISI,BISI
 BJBR,Bank BJB
 BJTM,Bank Jatim
-# Telekomunikasi dan infrastruktur
-TLKM,Telkom Indonesia
-EXCL,XL Axiata
-ISAT,Indosat Ooredoo Hutchison
-TOWR,Sarana Menara Nusantara
-TBIG,Tower Bersama Infrastructure
-MTEL,Dayamitra Telekomunikasi
-JSMR,Jasa Marga
-PGEO,Pertamina Geothermal Energy
-# Konsumen
-ASII,Astra International
-UNVR,Unilever Indonesia
-ICBP,Indofood CBP Sukses Makmur
-INDF,Indofood Sukses Makmur
-KLBF,Kalbe Farma
-GGRM,Gudang Garam
-HMSP,HM Sampoerna
-CPIN,Charoen Pokphand Indonesia
-JPFA,Japfa Comfeed Indonesia
-MYOR,Mayora Indah
-SIDO,Industri Jamu Sido Muncul
-AMRT,Sumber Alfaria Trijaya
-MAPI,Mitra Adiperkasa
-MAPA,MAP Aktif Adiperkasa
-ACES,Aspirasi Hidup Indonesia
-ERAA,Erajaya Swasembada
-MIKA,Mitra Keluarga Karyasehat
-HEAL,Medikaloka Hermina
-AUTO,Astra Otoparts
-# Energi dan tambang
-ADRO,Adaro Energy
-ADMR,Adaro Minerals Indonesia
-PTBA,Bukit Asam
-ITMG,Indo Tambangraya Megah
-HRUM,Harum Energy
-INDY,Indika Energy
-MEDC,Medco Energi Internasional
-PGAS,Perusahaan Gas Negara
-AKRA,AKR Corporindo
-ENRG,Energi Mega Persada
-ELSA,Elnusa
-INCO,Vale Indonesia
-ANTM,Aneka Tambang
-MDKA,Merdeka Copper Gold
-MBMA,Merdeka Battery Materials
-NCKL,Trimegah Bangun Persada
-AMMN,Amman Mineral Internasional
-BRMS,Bumi Resources Minerals
-TINS,Timah
-CUAN,Petrindo Jaya Kreasi
+BKDP,BKDP
+BKSL,BKSL
+BLTZ,BLTZ
+BMAS,BMAS
+BMRI,Bank Mandiri
+BMSR,BMSR
+BMTR,BMTR
+BNBA,BNBA
+BNBR,BNBR
+BNGA,Bank CIMB Niaga
+BNII,BNII
+BNLI,BNLI
+BOGA,BOGA
+BOLT,BOLT
+BRAM,BRAM
 BREN,Barito Renewables Energy
-# Industri dan bahan dasar
-SMGR,Semen Indonesia
-INTP,Indocement Tunggal Prakarsa
-UNTR,United Tractors
-ESSA,ESSA Industries
-TPIA,Chandra Asri Pacific
+BRIS,Bank Syariah Indonesia
+BRMS,Bumi Resources Minerals
 BRPT,Barito Pacific
-INKP,Indah Kiat Pulp and Paper
-TKIM,Pabrik Kertas Tjiwi Kimia
-# Perkebunan
-AALI,Astra Agro Lestari
-LSIP,PP London Sumatra Indonesia
-SSMS,Sawit Sumbermas Sarana
-DSNG,Dharma Satya Nusantara
-# Properti dan konstruksi
-CTRA,Ciputra Development
 BSDE,Bumi Serpong Damai
-PWON,Pakuwon Jati
-SMRA,Summarecon Agung
-ASRI,Alam Sutera Realty
-LPKR,Lippo Karawaci
-JRPT,Jaya Real Property
-WIKA,Wijaya Karya
-PTPP,PP (Persero)
-ADHI,Adhi Karya
-# Teknologi dan media
-GOTO,GoTo Gojek Tokopedia
+BSIM,BSIM
+BSSR,BSSR
+BTON,BTON
+BTPS,BTPS
 BUKA,Bukalapak
+BULL,BULL
+BUMI,BUMI
+BVIC,BVIC
+BYAN,BYAN
+CAMP,CAMP
+CARS,CARS
+CASA,CASA
+CEKA,CEKA
+CFIN,CFIN
+CINT,CINT
+CITA,CITA
+CLEO,CLEO
+CMNP,CMNP
+CMRY,CMRY
+CNKO,CNKO
+CPIN,Charoen Pokphand Indonesia
+CPRO,CPRO
+CSAP,CSAP
+CTRA,Ciputra Development
+CUAN,Petrindo Jaya Kreasi
+DART,DART
+DEFI,DEFI
+DEPO,DEPO
+DEWA,DEWA
+DGNS,DGNS
+DIGI,DIGI
+DILD,DILD
+DKFT,DKFT
+DMAS,DMAS
+DNET,DNET
+DOID,DOID
+DPNS,DPNS
+DSNG,Dharma Satya Nusantara
+DSSA,DSSA
+DUTI,DUTI
+DVLA,DVLA
+DYAN,DYAN
+EAST,EAST
+ECII,ECII
+EKAD,EKAD
+ELSA,Elnusa
+ELTY,ELTY
 EMTK,Elang Mahkota Teknologi
-SCMA,Surya Citra Media
-MNCN,Media Nusantara Citra
+ENRG,Energi Mega Persada
+EPMT,EPMT
+ERAA,Erajaya Swasembada
+ERTX,ERTX
+ESSA,ESSA Industries
+ESTI,ESTI
+EXCL,XL Axiata
+FAST,FAST
+FASW,FASW
 FILM,MD Pictures
+FISH,FISH
+FMII,FMII
+FORU,FORU
+FPNI,FPNI
+GDST,GDST
+GDYR,GDYR
+GEMA,GEMA
+GEMS,GEMS
+GGRM,Gudang Garam
+GIAA,GIAA
+GJTL,GJTL
+GMFI,GMFI
+GMTD,GMTD
+GOLD,GOLD
+GOOD,GOOD
+GOTO,GoTo Gojek Tokopedia
+GPRA,GPRA
+GSMF,GSMF
+GTBO,GTBO
+GWSA,GWSA
+HDFA,HDFA
+HEAL,Medikaloka Hermina
+HERO,HERO
+HEXA,HEXA
+HITS,HITS
+HMSP,HM Sampoerna
+HOKI,HOKI
+HRTA,HRTA
+HRUM,Harum Energy
+IATA,IATA
+IBST,IBST
+ICBP,Indofood CBP Sukses Makmur
+IGAR,IGAR
+IKAI,IKAI
+IMAS,IMAS
+INAF,INAF
+INAI,INAI
+INCO,Vale Indonesia
+INDF,Indofood Sukses Makmur
+INDR,INDR
+INDS,INDS
+INDY,Indika Energy
+INKP,Indah Kiat Pulp and Paper
+INPC,INPC
+INTA,INTA
+INTP,Indocement Tunggal Prakarsa
+IPCC,IPCC
+IPCM,IPCM
+IPOL,IPOL
+ISAT,Indosat Ooredoo Hutchison
+ISSP,ISSP
+ITMG,Indo Tambangraya Megah
+JIHD,JIHD
+JKON,JKON
+JPFA,Japfa Comfeed Indonesia
+JRPT,Jaya Real Property
+JSMR,Jasa Marga
+JSPT,JSPT
+JTPE,JTPE
+KAEF,KAEF
+KBLI,KBLI
+KBLM,KBLM
+KDSI,KDSI
+KEEN,KEEN
+KIJA,KIJA
+KINO,KINO
+KLBF,Kalbe Farma
+KMTR,KMTR
+KOIN,KOIN
+KONI,KONI
+KPIG,KPIG
+KRAS,KRAS
+LAPD,LAPD
+LEAD,LEAD
+LINK,LINK
+LION,LION
+LMPI,LMPI
+LPCK,LPCK
+LPGI,LPGI
+LPIN,LPIN
+LPKR,Lippo Karawaci
+LPPF,LPPF
+LSIP,PP London Sumatra Indonesia
+MAIN,MAIN
+MAPA,MAP Aktif Adiperkasa
+MAPI,Mitra Adiperkasa
+MARK,MARK
+MAYA,MAYA
+MBMA,Merdeka Battery Materials
+MBSS,MBSS
+MCAS,MCAS
+MCOL,MCOL
+MDIA,MDIA
+MDKA,Merdeka Copper Gold
+MDLN,MDLN
+MEDC,Medco Energi Internasional
+MEGA,Bank Mega
+MFMI,MFMI
+MGNA,MGNA
+MICE,MICE
+MIDI,MIDI
+MIKA,Mitra Keluarga Karyasehat
+MINA,MINA
+MITI,MITI
+MKPI,MKPI
+MLBI,MLBI
+MLIA,MLIA
+MLPL,MLPL
+MMLP,MMLP
+MNCN,Media Nusantara Citra
+MOLI,MOLI
+MPMX,MPMX
+MPPA,MPPA
+MPRO,MPRO
+MRAT,MRAT
+MREI,MREI
+MTDL,MTDL
+MTEL,Dayamitra Telekomunikasi
+MTFN,MTFN
+MTSM,MTSM
+MYOR,Mayora Indah
+NCKL,Trimegah Bangun Persada
+NELY,NELY
+NFCX,NFCX
+NIKL,NIKL
+NIRO,NIRO
+NISP,Bank OCBC NISP
+NOBU,NOBU
+NRCA,NRCA
+OKAS,OKAS
+OMRE,OMRE
+PADI,PADI
+PALM,PALM
+PANI,PANI
+PBID,PBID
+PBRX,PBRX
+PCAR,PCAR
+PEGE,PEGE
+PGAS,Perusahaan Gas Negara
+PGEO,Pertamina Geothermal Energy
+PGUN,PGUN
+PICO,PICO
+PJAA,PJAA
+PLIN,PLIN
+PNBN,Bank Pan Indonesia
+PNIN,PNIN
+PNLF,PNLF
+POLA,POLA
+POLU,POLU
+POLY,POLY
+PORT,PORT
+POWR,POWR
+PPRE,PPRE
+PRDA,PRDA
+PSAB,PSAB
+PSDN,PSDN
+PSSI,PSSI
+PTBA,Bukit Asam
+PTPP,PP (Persero)
+PTRO,PTRO
+PTSN,PTSN
+PURI,PURI
+PWON,Pakuwon Jati
+PYFA,PYFA
+RAJA,RAJA
+RALS,RALS
+RBMS,RBMS
+RDTX,RDTX
+RELI,RELI
+RICY,RICY
+RODA,RODA
+ROTI,ROTI
+RUIS,RUIS
+SAME,SAME
+SCCO,SCCO
+SCMA,Surya Citra Media
+SDMU,SDMU
+SDPC,SDPC
+SFAN,SFAN
+SGER,SGER
+SHID,SHID
+SIDO,Industri Jamu Sido Muncul
+SILO,SILO
+SIMP,SIMP
+SINI,SINI
+SIPD,SIPD
+SKBM,SKBM
+SKLT,SKLT
+SKRN,SKRN
+SMAR,SMAR
+SMBR,SMBR
+SMCB,SMCB
+SMDM,SMDM
+SMDR,SMDR
+SMGR,Semen Indonesia
+SMMA,SMMA
+SMRA,Summarecon Agung
+SMSM,SMSM
+SOCI,SOCI
+SOHO,SOHO
+SPMA,SPMA
+SQMI,SQMI
 SRTG,Saratoga Investama Sedaya
-AVIA,Avia Avian
+SSIA,SSIA
+SSMS,Sawit Sumbermas Sarana
+SSTM,SSTM
+STAA,STAA
+STTP,STTP
+SULI,SULI
+TALF,TALF
+TAPG,TAPG
+TARA,TARA
+TBIG,Tower Bersama Infrastructure
+TBLA,TBLA
+TBMS,TBMS
+TCID,TCID
+TFCO,TFCO
+TGKA,TGKA
+TINS,Timah
+TIRA,TIRA
+TIRT,TIRT
+TKIM,Pabrik Kertas Tjiwi Kimia
+TLKM,Telkom Indonesia
+TMAS,TMAS
+TMPO,TMPO
+TOBA,TOBA
+TOTL,TOTL
+TOWR,Sarana Menara Nusantara
+TPIA,Chandra Asri Pacific
+TRIM,TRIM
+TRIS,TRIS
+TRST,TRST
+TRUS,TRUS
+TSPC,TSPC
+UANG,UANG
+ULTJ,ULTJ
+UNIC,UNIC
+UNTR,United Tractors
+UNVR,Unilever Indonesia
+VICI,VICI
+VIVA,VIVA
+VOKS,VOKS
+WAPO,WAPO
+WEGE,WEGE
+WICO,WICO
+WIIM,WIIM
+WIKA,Wijaya Karya
+WINS,WINS
+WMUU,WMUU
+WOOD,WOOD
+WSBP,WSBP
+WTON,WTON
+YELO,YELO
+ZBRA,ZBRA
+ZINC,ZINC
