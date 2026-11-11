@@ -2,10 +2,10 @@
  "ready": true,
  "version": 2,
  "period": [
-  "2017-08-29",
-  "2026-11-10"
+  "2017-08-30",
+  "2026-11-11"
  ],
- "split_date": "2023-01-19",
+ "split_date": "2023-01-20",
  "fees": {
   "buy": 0.0015,
   "sell": 0.0025
@@ -53,16 +53,16 @@
  },
  "by_threshold": {
   "60": {
-   "n": 1811,
-   "win_rate": 35.3,
-   "avg_win": 7.2,
-   "avg_loss": -5.14,
+   "n": 1813,
+   "win_rate": 35.4,
+   "avg_win": 7.18,
+   "avg_loss": -5.13,
    "expectancy": -0.78,
    "avg_R": -0.16,
-   "profit_factor": 0.76,
+   "profit_factor": 0.77,
    "max_drawdown": -96.6,
-   "avg_hold": 11.8,
-   "total_return_1pct": -95.1
+   "avg_hold": 11.9,
+   "total_return_1pct": -95.0
   },
   "70": {
    "n": 347,
@@ -90,14 +90,14 @@
   }
  },
  "diagnosis": {
-  "n": 1811,
+  "n": 1813,
   "komponen": [
    {
     "name": "Tren naik",
     "tinggi": {
-     "n": 1696,
-     "win_rate": 35.4,
-     "expectancy": -0.76,
+     "n": 1698,
+     "win_rate": 35.5,
+     "expectancy": -0.75,
      "profit_factor": 0.77
     },
     "rendah": {
@@ -110,16 +110,16 @@
    {
     "name": "Akumulasi",
     "tinggi": {
-     "n": 1113,
+     "n": 1114,
      "win_rate": 33.9,
-     "expectancy": -0.93,
+     "expectancy": -0.92,
      "profit_factor": 0.73
     },
     "rendah": {
-     "n": 698,
-     "win_rate": 37.5,
-     "expectancy": -0.56,
-     "profit_factor": 0.82
+     "n": 699,
+     "win_rate": 37.6,
+     "expectancy": -0.55,
+     "profit_factor": 0.83
     }
    },
    {
@@ -131,24 +131,24 @@
      "profit_factor": 1.05
     },
     "rendah": {
-     "n": 1808,
-     "win_rate": 35.3,
-     "expectancy": -0.79,
-     "profit_factor": 0.76
+     "n": 1810,
+     "win_rate": 35.4,
+     "expectancy": -0.78,
+     "profit_factor": 0.77
     }
    },
    {
     "name": "Dekat support",
     "tinggi": {
-     "n": 1330,
-     "win_rate": 36.1,
+     "n": 1333,
+     "win_rate": 36.2,
      "expectancy": -0.64,
      "profit_factor": 0.8
     },
     "rendah": {
-     "n": 481,
+     "n": 480,
      "win_rate": 33.1,
-     "expectancy": -1.18,
+     "expectancy": -1.17,
      "profit_factor": 0.68
     }
    },
@@ -161,16 +161,16 @@
      "profit_factor": 0.74
     },
     "rendah": {
-     "n": 1115,
-     "win_rate": 35.2,
-     "expectancy": -0.74,
+     "n": 1117,
+     "win_rate": 35.3,
+     "expectancy": -0.73,
      "profit_factor": 0.78
     }
    },
    {
     "name": "Likuiditas",
     "tinggi": {
-     "n": 1567,
+     "n": 1569,
      "win_rate": 35.4,
      "expectancy": -0.78,
      "profit_factor": 0.76
@@ -187,20 +187,20 @@
    {
     "label": "SL sempit (sampai 4%)",
     "n": 366,
-    "win_rate": 36.6,
-    "expectancy": -0.57,
-    "profit_factor": 0.76
+    "win_rate": 36.9,
+    "expectancy": -0.55,
+    "profit_factor": 0.77
    },
    {
     "label": "SL sedang (4-5%)",
-    "n": 397,
-    "win_rate": 36.5,
+    "n": 398,
+    "win_rate": 36.4,
     "expectancy": -0.54,
     "profit_factor": 0.82
    },
    {
     "label": "SL lebar (di atas 5%)",
-    "n": 1048,
+    "n": 1049,
     "win_rate": 34.4,
     "expectancy": -0.95,
     "profit_factor": 0.75
@@ -216,33 +216,33 @@
    },
    {
     "label": "Pasar sedang (40-60%)",
-    "n": 793,
-    "win_rate": 34.4,
-    "expectancy": -0.98,
+    "n": 796,
+    "win_rate": 34.5,
+    "expectancy": -0.97,
     "profit_factor": 0.71
    },
    {
     "label": "Pasar kuat (>60%)",
-    "n": 275,
-    "win_rate": 34.2,
-    "expectancy": -0.62,
-    "profit_factor": 0.82
+    "n": 274,
+    "win_rate": 34.3,
+    "expectancy": -0.61,
+    "profit_factor": 0.83
    }
   ],
   "tahun": [
    {
     "label": "2017",
-    "n": 82,
-    "win_rate": 48.8,
-    "expectancy": 0.92,
-    "profit_factor": 1.4
+    "n": 83,
+    "win_rate": 48.2,
+    "expectancy": 0.91,
+    "profit_factor": 1.39
    },
    {
     "label": "2018",
-    "n": 148,
-    "win_rate": 35.1,
-    "expectancy": -0.45,
-    "profit_factor": 0.86
+    "n": 149,
+    "win_rate": 36.2,
+    "expectancy": -0.38,
+    "profit_factor": 0.88
    },
    {
     "label": "2019",
@@ -310,21 +310,21 @@
    },
    {
     "label": "TP1",
-    "n": 221,
+    "n": 222,
     "share": 12.2,
-    "avg": 7.22
+    "avg": 7.2
    },
    {
     "label": "SL",
-    "n": 1021,
-    "share": 56.4,
-    "avg": -5.58
+    "n": 1020,
+    "share": 56.3,
+    "avg": -5.59
    },
    {
     "label": "Kedaluwarsa",
-    "n": 383,
-    "share": 21.1,
-    "avg": 1.2
+    "n": 385,
+    "share": 21.2,
+    "avg": 1.19
    }
   ]
  },
