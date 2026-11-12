@@ -2,10 +2,10 @@
  "ready": true,
  "version": 2,
  "period": [
-  "2017-08-30",
-  "2026-11-11"
+  "2017-08-31",
+  "2026-11-12"
  ],
- "split_date": "2023-01-20",
+ "split_date": "2023-01-24",
  "fees": {
   "buy": 0.0015,
   "sell": 0.0025
@@ -110,15 +110,15 @@
    {
     "name": "Akumulasi",
     "tinggi": {
-     "n": 1114,
+     "n": 1115,
      "win_rate": 33.9,
-     "expectancy": -0.92,
+     "expectancy": -0.93,
      "profit_factor": 0.73
     },
     "rendah": {
-     "n": 699,
-     "win_rate": 37.6,
-     "expectancy": -0.55,
+     "n": 698,
+     "win_rate": 37.7,
+     "expectancy": -0.54,
      "profit_factor": 0.83
     }
    },
