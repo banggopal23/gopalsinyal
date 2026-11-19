@@ -1,15 +1,69 @@
 {
- "generated": "2026-11-18 17:42 WIB",
- "last_data_date": "2026-11-18",
+ "generated": "2026-11-19 17:37 WIB",
+ "last_data_date": "2026-11-19",
  "demo": false,
  "scanned": 382,
- "passed_filter": 20,
+ "passed_filter": 19,
  "min_score": 70,
  "valid_days": 20,
- "stocks": [],
+ "stocks": [
+  {
+   "k": "AALI",
+   "nm": "Astra Agro Lestari",
+   "mode": "santai",
+   "price": 9725.0,
+   "chg": -2.02,
+   "score": 72,
+   "plan": {
+    "entry": 9725.0,
+    "sl": 9175.0,
+    "tp1": 10825.0,
+    "tp2": 11375.0,
+    "risk": 550.0
+   },
+   "sig": [
+    {
+     "n": "Tren naik",
+     "p": 20,
+     "m": 20,
+     "t": "Harga di atas EMA 50, EMA 50 di atas EMA 200, EMA 50 menanjak"
+    },
+    {
+     "n": "Akumulasi",
+     "p": 16,
+     "m": 25,
+     "t": "66% volume 10 hari terjadi di hari naik, OBV di atas rata-rata"
+    },
+    {
+     "n": "Harmonic",
+     "p": 0,
+     "m": 15,
+     "t": "Pola nan bullish, harga di zona D"
+    },
+    {
+     "n": "Dekat support",
+     "p": 10,
+     "m": 10,
+     "t": "1,4x ATR di atas support 9.275"
+    },
+    {
+     "n": "Momentum",
+     "p": 14,
+     "m": 15,
+     "t": "ADX 30, RSI 59"
+    },
+    {
+     "n": "Likuiditas",
+     "p": 12,
+     "m": 15,
+     "t": "Transaksi rata-rata Rp 31 M per hari"
+    }
+   ]
+  }
+ ],
  "market": {
-  "date": "2026-11-18",
-  "close": 5247.9,
+  "date": "2026-11-19",
+  "close": 5194.1,
   "above50": false,
   "above200": false
  }

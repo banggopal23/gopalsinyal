@@ -2,10 +2,10 @@
  "ready": true,
  "version": 2,
  "period": [
-  "2017-09-06",
-  "2026-11-18"
+  "2017-09-07",
+  "2026-11-19"
  ],
- "split_date": "2023-01-30",
+ "split_date": "2023-01-31",
  "fees": {
   "buy": 0.0015,
   "sell": 0.0025
@@ -53,7 +53,7 @@
  },
  "by_threshold": {
   "60": {
-   "n": 1807,
+   "n": 1808,
    "win_rate": 35.3,
    "avg_win": 7.18,
    "avg_loss": -5.14,
@@ -62,7 +62,7 @@
    "profit_factor": 0.76,
    "max_drawdown": -96.6,
    "avg_hold": 11.9,
-   "total_return_1pct": -95.1
+   "total_return_1pct": -95.2
   },
   "70": {
    "n": 347,
@@ -90,7 +90,7 @@
   }
  },
  "diagnosis": {
-  "n": 1807,
+  "n": 1808,
   "komponen": [
    {
     "name": "Tren naik",
@@ -101,16 +101,16 @@
      "profit_factor": 0.77
     },
     "rendah": {
-     "n": 115,
-     "win_rate": 33.0,
-     "expectancy": -1.16,
-     "profit_factor": 0.62
+     "n": 116,
+     "win_rate": 32.8,
+     "expectancy": -1.19,
+     "profit_factor": 0.61
     }
    },
    {
     "name": "Akumulasi",
     "tinggi": {
-     "n": 1109,
+     "n": 1110,
      "win_rate": 33.9,
      "expectancy": -0.93,
      "profit_factor": 0.73
@@ -131,7 +131,7 @@
      "profit_factor": 1.05
     },
     "rendah": {
-     "n": 1804,
+     "n": 1805,
      "win_rate": 35.3,
      "expectancy": -0.79,
      "profit_factor": 0.76
@@ -140,9 +140,9 @@
    {
     "name": "Dekat support",
     "tinggi": {
-     "n": 1329,
+     "n": 1330,
      "win_rate": 36.2,
-     "expectancy": -0.64,
+     "expectancy": -0.65,
      "profit_factor": 0.8
     },
     "rendah": {
@@ -161,7 +161,7 @@
      "profit_factor": 0.74
     },
     "rendah": {
-     "n": 1114,
+     "n": 1115,
      "win_rate": 35.2,
      "expectancy": -0.74,
      "profit_factor": 0.78
@@ -170,9 +170,9 @@
    {
     "name": "Likuiditas",
     "tinggi": {
-     "n": 1565,
+     "n": 1566,
      "win_rate": 35.3,
-     "expectancy": -0.79,
+     "expectancy": -0.8,
      "profit_factor": 0.76
     },
     "rendah": {
@@ -193,10 +193,10 @@
    },
    {
     "label": "SL sedang (4-5%)",
-    "n": 396,
-    "win_rate": 36.6,
-    "expectancy": -0.55,
-    "profit_factor": 0.82
+    "n": 397,
+    "win_rate": 36.5,
+    "expectancy": -0.56,
+    "profit_factor": 0.81
    },
    {
     "label": "SL lebar (di atas 5%)",
@@ -209,7 +209,7 @@
   "pasar": [
    {
     "label": "Pasar lemah (<40% saham di atas EMA 50)",
-    "n": 745,
+    "n": 746,
     "win_rate": 36.6,
     "expectancy": -0.64,
     "profit_factor": 0.8
@@ -295,10 +295,10 @@
    },
    {
     "label": "2026",
-    "n": 101,
-    "win_rate": 29.7,
-    "expectancy": -2.02,
-    "profit_factor": 0.53
+    "n": 102,
+    "win_rate": 29.4,
+    "expectancy": -2.04,
+    "profit_factor": 0.52
    }
   ],
   "hasil": [
@@ -316,7 +316,7 @@
    },
    {
     "label": "SL",
-    "n": 1019,
+    "n": 1020,
     "share": 56.4,
     "avg": -5.59
    },
