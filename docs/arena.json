@@ -4,10 +4,10 @@
   "min_selesai": 30,
   "min_pf": 1.3
  },
- "last_date": "2026-11-20",
+ "last_date": "2026-11-23",
  "market": {
-  "date": "2026-11-20",
-  "close": 5146.3,
+  "date": "2026-11-23",
+  "close": 5215.9,
   "above50": false,
   "above200": false
  },
@@ -68,8 +68,8 @@
      "entry_date": "2026-11-18",
      "fill": 9975.0,
      "tp1_hit": false,
-     "pct": -2.66,
-     "last": 9750.0
+     "pct": -4.41,
+     "last": 9575.0
     }
    ],
    "verdict": "data"
@@ -79,11 +79,11 @@
    "desc": "RSI14 di bawah 35 saat harga masih di atas EMA 200. SL 2 ATR, target 3 ATR, maks 10 hari.",
    "short": "Koreksi",
    "summary": {
-    "n_selesai": 1,
-    "n_berjalan": 1,
+    "n_selesai": 2,
+    "n_berjalan": 2,
     "n_menunggu": 2,
     "win_rate": 0.0,
-    "avg": -2.04,
+    "avg": -4.78,
     "pf": 0.0
    },
    "log": [
@@ -151,6 +151,32 @@
       "risk": 95.0,
       "days": 10
      }
+    },
+    {
+     "k": "AUTO",
+     "nm": "Astra Otoparts",
+     "sig": "2026-11-23",
+     "plan": {
+      "entry": 2950.0,
+      "sl": 2740.0,
+      "tp1": 3260.0,
+      "tp2": 3260.0,
+      "risk": 210.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "SGER",
+     "nm": "SGER",
+     "sig": "2026-11-23",
+     "plan": {
+      "entry": 590.0,
+      "sl": 496.0,
+      "tp1": 730.0,
+      "tp2": 730.0,
+      "risk": 94.0,
+      "days": 10
+     }
     }
    ],
    "today": [
@@ -158,11 +184,11 @@
      "k": "AUTO",
      "nm": "Astra Otoparts",
      "plan": {
-      "entry": 2940.0,
-      "sl": 2720.0,
+      "entry": 2950.0,
+      "sl": 2740.0,
       "tp1": 3260.0,
       "tp2": 3260.0,
-      "risk": 220.0,
+      "risk": 210.0,
       "days": 10
      }
     },
@@ -170,11 +196,11 @@
      "k": "SGER",
      "nm": "SGER",
      "plan": {
-      "entry": 600.0,
-      "sl": 505.0,
-      "tp1": 740.0,
-      "tp2": 740.0,
-      "risk": 95.0,
+      "entry": 590.0,
+      "sl": 496.0,
+      "tp1": 730.0,
+      "tp2": 730.0,
+      "risk": 94.0,
       "days": 10
      }
     }
@@ -183,14 +209,36 @@
     {
      "k": "SGER",
      "nm": "SGER",
-     "sig": "2026-11-20",
+     "sig": "2026-11-23",
      "status": "menunggu"
     },
     {
      "k": "AUTO",
      "nm": "Astra Otoparts",
-     "sig": "2026-11-20",
+     "sig": "2026-11-23",
      "status": "menunggu"
+    },
+    {
+     "k": "SGER",
+     "nm": "SGER",
+     "sig": "2026-11-20",
+     "status": "berjalan",
+     "entry_date": "2026-11-23",
+     "fill": 600.0,
+     "tp1_hit": false,
+     "pct": -2.07,
+     "last": 590.0
+    },
+    {
+     "k": "AUTO",
+     "nm": "Astra Otoparts",
+     "sig": "2026-11-20",
+     "status": "berjalan",
+     "entry_date": "2026-11-23",
+     "fill": 2940.0,
+     "tp1_hit": false,
+     "pct": -0.06,
+     "last": 2950.0
     },
     {
      "k": "SGER",
@@ -202,12 +250,12 @@
      "k": "MARK",
      "nm": "MARK",
      "sig": "2026-11-09",
-     "status": "berjalan",
+     "status": "selesai",
      "entry_date": "2026-11-10",
+     "exit_date": "2026-11-23",
      "fill": 985.0,
-     "tp1_hit": false,
-     "pct": -7.0,
-     "last": 920.0
+     "outcome": "Kedaluwarsa",
+     "pct": -7.51
     },
     {
      "k": "SGER",
@@ -245,11 +293,11 @@
    "desc": "Saham yang baru masuk 10 terkuat (kenaikan 60 hari). Ditahan maks 20 hari.",
    "short": "Momentum",
    "summary": {
-    "n_selesai": 1,
-    "n_berjalan": 10,
-    "n_menunggu": 3,
+    "n_selesai": 2,
+    "n_berjalan": 11,
+    "n_menunggu": 2,
     "win_rate": 0.0,
-    "avg": -8.47,
+    "avg": -9.85,
     "pf": 0.0
    },
    "log": [
@@ -499,64 +547,100 @@
       "risk": 34.0,
       "days": 20
      }
+    },
+    {
+     "k": "BTPS",
+     "nm": "BTPS",
+     "sig": "2026-11-23",
+     "plan": {
+      "entry": 1065.0,
+      "sl": 985.0,
+      "tp1": 1600.0,
+      "tp2": 1600.0,
+      "risk": 80.0,
+      "days": 20
+     }
+    },
+    {
+     "k": "SMGR",
+     "nm": "Semen Indonesia",
+     "sig": "2026-11-23",
+     "plan": {
+      "entry": 1605.0,
+      "sl": 1425.0,
+      "tp1": 2410.0,
+      "tp2": 2410.0,
+      "risk": 180.0,
+      "days": 20
+     }
     }
    ],
    "today": [
     {
-     "k": "BDMN",
-     "nm": "Bank Danamon",
+     "k": "BTPS",
+     "nm": "BTPS",
      "plan": {
-      "entry": 4600.0,
-      "sl": 4230.0,
-      "tp1": 6900.0,
-      "tp2": 6900.0,
-      "risk": 370.0,
+      "entry": 1065.0,
+      "sl": 985.0,
+      "tp1": 1600.0,
+      "tp2": 1600.0,
+      "risk": 80.0,
       "days": 20
      }
     },
     {
-     "k": "BUKA",
-     "nm": "Bukalapak",
+     "k": "SMGR",
+     "nm": "Semen Indonesia",
      "plan": {
-      "entry": 117.0,
-      "sl": 101.0,
-      "tp1": 176.0,
-      "tp2": 176.0,
-      "risk": 16.0,
-      "days": 20
-     }
-    },
-    {
-     "k": "TMPO",
-     "nm": "TMPO",
-     "plan": {
-      "entry": 254.0,
-      "sl": 220.0,
-      "tp1": 382.0,
-      "tp2": 382.0,
-      "risk": 34.0,
+      "entry": 1605.0,
+      "sl": 1425.0,
+      "tp1": 2410.0,
+      "tp2": 2410.0,
+      "risk": 180.0,
       "days": 20
      }
     }
    ],
    "trades": [
     {
+     "k": "SMGR",
+     "nm": "Semen Indonesia",
+     "sig": "2026-11-23",
+     "status": "menunggu"
+    },
+    {
+     "k": "BTPS",
+     "nm": "BTPS",
+     "sig": "2026-11-23",
+     "status": "menunggu"
+    },
+    {
      "k": "TMPO",
      "nm": "TMPO",
      "sig": "2026-11-20",
-     "status": "menunggu"
+     "status": "berjalan",
+     "entry_date": "2026-11-23",
+     "fill": 238.0,
+     "tp1_hit": false,
+     "pct": -0.4,
+     "last": 238.0
     },
     {
      "k": "BUKA",
      "nm": "Bukalapak",
      "sig": "2026-11-20",
-     "status": "menunggu"
+     "status": "berjalan",
+     "entry_date": "2026-11-23",
+     "fill": 117.0,
+     "tp1_hit": false,
+     "pct": -2.96,
+     "last": 114.0
     },
     {
      "k": "BDMN",
      "nm": "Bank Danamon",
      "sig": "2026-11-20",
-     "status": "menunggu"
+     "status": "dilewati"
     },
     {
      "k": "SMGR",
@@ -583,8 +667,8 @@
      "entry_date": "2026-11-19",
      "fill": 1620.0,
      "tp1_hit": false,
-     "pct": -4.1,
-     "last": 1560.0
+     "pct": -1.33,
+     "last": 1605.0
     },
     {
      "k": "INTP",
@@ -605,8 +689,8 @@
      "entry_date": "2026-11-19",
      "fill": 520.0,
      "tp1_hit": false,
-     "pct": 2.48,
-     "last": 535.0
+     "pct": 1.52,
+     "last": 530.0
     },
     {
      "k": "DKFT",
@@ -619,23 +703,6 @@
      "nm": "BSSR",
      "sig": "2026-11-17",
      "status": "dilewati"
-    },
-    {
-     "k": "BSSR",
-     "nm": "BSSR",
-     "sig": "2026-11-16",
-     "status": "berjalan",
-     "entry_date": "2026-11-17",
-     "fill": 5100.0,
-     "tp1_hit": false,
-     "pct": -1.87,
-     "last": 5025.0
-    },
-    {
-     "k": "ASII",
-     "nm": "Astra International",
-     "sig": "2026-11-16",
-     "status": "dilewati"
     }
    ],
    "verdict": "data"
@@ -645,12 +712,12 @@
    "desc": "Model belajar dari riwayat harga dan dilatih ulang tiap hari; memilih 3 saham dengan peluang tertinggi.",
    "short": "AI",
    "summary": {
-    "n_selesai": 5,
-    "n_berjalan": 5,
+    "n_selesai": 6,
+    "n_berjalan": 4,
     "n_menunggu": 3,
-    "win_rate": 60.0,
-    "avg": 3.72,
-    "pf": 1.51
+    "win_rate": 50.0,
+    "avg": 0.83,
+    "pf": 1.1
    },
    "log": [
     {
@@ -1156,70 +1223,135 @@
       "days": 10
      },
      "prob": 0.606
+    },
+    {
+     "k": "BRPT",
+     "nm": "Barito Pacific",
+     "sig": "2026-11-23",
+     "plan": {
+      "entry": 730.0,
+      "sl": 555.0,
+      "tp1": 990.0,
+      "tp2": 990.0,
+      "risk": 175.0,
+      "days": 10
+     },
+     "prob": 0.637
+    },
+    {
+     "k": "ENRG",
+     "nm": "Energi Mega Persada",
+     "sig": "2026-11-23",
+     "plan": {
+      "entry": 555.0,
+      "sl": 440.0,
+      "tp1": 730.0,
+      "tp2": 730.0,
+      "risk": 115.0,
+      "days": 10
+     },
+     "prob": 0.593
+    },
+    {
+     "k": "EMTK",
+     "nm": "Elang Mahkota Teknologi",
+     "sig": "2026-11-23",
+     "plan": {
+      "entry": 268.0,
+      "sl": 232.0,
+      "tp1": 322.0,
+      "tp2": 322.0,
+      "risk": 36.0,
+      "days": 10
+     },
+     "prob": 0.592
     }
    ],
    "today": [
     {
      "k": "BRPT",
      "nm": "Barito Pacific",
-     "prob": 0.622,
+     "prob": 0.637,
      "plan": {
-      "entry": 625.0,
-      "sl": 462.0,
-      "tp1": 870.0,
-      "tp2": 870.0,
-      "risk": 163.0,
+      "entry": 730.0,
+      "sl": 555.0,
+      "tp1": 990.0,
+      "tp2": 990.0,
+      "risk": 175.0,
       "days": 10
      }
     },
     {
-     "k": "ARTO",
-     "nm": "Bank Jago",
-     "prob": 0.614,
+     "k": "ENRG",
+     "nm": "Energi Mega Persada",
+     "prob": 0.593,
      "plan": {
-      "entry": 500.0,
-      "sl": 420.0,
-      "tp1": 620.0,
-      "tp2": 620.0,
-      "risk": 80.0,
+      "entry": 555.0,
+      "sl": 440.0,
+      "tp1": 730.0,
+      "tp2": 730.0,
+      "risk": 115.0,
       "days": 10
      }
     },
     {
-     "k": "BRMS",
-     "nm": "Bumi Resources Minerals",
-     "prob": 0.606,
+     "k": "EMTK",
+     "nm": "Elang Mahkota Teknologi",
+     "prob": 0.592,
      "plan": {
-      "entry": 278.0,
-      "sl": 220.0,
-      "tp1": 366.0,
-      "tp2": 366.0,
-      "risk": 58.0,
+      "entry": 268.0,
+      "sl": 232.0,
+      "tp1": 322.0,
+      "tp2": 322.0,
+      "risk": 36.0,
       "days": 10
      }
     }
    ],
    "trades": [
     {
+     "k": "EMTK",
+     "nm": "Elang Mahkota Teknologi",
+     "sig": "2026-11-23",
+     "prob": 0.592,
+     "status": "menunggu"
+    },
+    {
+     "k": "ENRG",
+     "nm": "Energi Mega Persada",
+     "sig": "2026-11-23",
+     "prob": 0.593,
+     "status": "menunggu"
+    },
+    {
+     "k": "BRPT",
+     "nm": "Barito Pacific",
+     "sig": "2026-11-23",
+     "prob": 0.637,
+     "status": "menunggu"
+    },
+    {
      "k": "BRMS",
      "nm": "Bumi Resources Minerals",
      "sig": "2026-11-20",
      "prob": 0.606,
-     "status": "menunggu"
+     "status": "dilewati",
+     "entry_date": "2026-11-23",
+     "fill": 284.0
     },
     {
      "k": "ARTO",
      "nm": "Bank Jago",
      "sig": "2026-11-20",
      "prob": 0.614,
-     "status": "menunggu"
+     "status": "dilewati"
     },
     {
      "k": "BRPT",
      "nm": "Barito Pacific",
      "sig": "2026-11-20",
      "prob": 0.622,
-     "status": "menunggu"
+     "status": "dilewati"
     },
     {
      "k": "ARTO",
@@ -1230,8 +1362,8 @@
      "entry_date": "2026-11-20",
      "fill": 510.0,
      "tp1_hit": false,
-     "pct": -2.36,
-     "last": 500.0
+     "pct": 5.48,
+     "last": 540.0
     },
     {
      "k": "BRMS",
@@ -1249,8 +1381,8 @@
      "entry_date": "2026-11-20",
      "fill": 635.0,
      "tp1_hit": false,
-     "pct": -1.97,
-     "last": 625.0
+     "pct": 14.56,
+     "last": 730.0
     },
     {
      "k": "ENRG",
@@ -1261,8 +1393,8 @@
      "entry_date": "2026-11-19",
      "fill": 570.0,
      "tp1_hit": false,
-     "pct": -6.54,
-     "last": 535.0
+     "pct": -3.03,
+     "last": 555.0
     },
     {
      "k": "BRMS",
@@ -1277,27 +1409,6 @@
      "sig": "2026-11-18",
      "prob": 0.65,
      "status": "dilewati"
-    },
-    {
-     "k": "EXCL",
-     "nm": "XL Axiata",
-     "sig": "2026-11-17",
-     "prob": 0.592,
-     "status": "dilewati"
-    },
-    {
-     "k": "BRMS",
-     "nm": "Bumi Resources Minerals",
-     "sig": "2026-11-17",
-     "prob": 0.617,
-     "status": "dilewati"
-    },
-    {
-     "k": "BRPT",
-     "nm": "Barito Pacific",
-     "sig": "2026-11-17",
-     "prob": 0.649,
-     "status": "dilewati"
     }
    ],
    "verdict": "data"
@@ -1307,12 +1418,12 @@
    "desc": "3 saham likuid acak per hari. Strategi yang tidak mengalahkan ini berarti tidak punya keunggulan.",
    "short": "Acak",
    "summary": {
-    "n_selesai": 8,
-    "n_berjalan": 23,
+    "n_selesai": 12,
+    "n_berjalan": 22,
     "n_menunggu": 3,
-    "win_rate": 50.0,
-    "avg": 1.64,
-    "pf": 1.3
+    "win_rate": 33.3,
+    "avg": -0.29,
+    "pf": 0.94
    },
    "log": [
     {
@@ -1782,64 +1893,136 @@
       "risk": 17.0,
       "days": 10
      }
+    },
+    {
+     "k": "KIJA",
+     "nm": "KIJA",
+     "sig": "2026-11-23",
+     "plan": {
+      "entry": 108.0,
+      "sl": 92.0,
+      "tp1": 132.0,
+      "tp2": 132.0,
+      "risk": 16.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "AKRA",
+     "nm": "AKR Corporindo",
+     "sig": "2026-11-23",
+     "plan": {
+      "entry": 1245.0,
+      "sl": 1135.0,
+      "tp1": 1410.0,
+      "tp2": 1410.0,
+      "risk": 110.0,
+      "days": 10
+     }
+    },
+    {
+     "k": "TAPG",
+     "nm": "TAPG",
+     "sig": "2026-11-23",
+     "plan": {
+      "entry": 1710.0,
+      "sl": 1580.0,
+      "tp1": 1900.0,
+      "tp2": 1900.0,
+      "risk": 130.0,
+      "days": 10
+     }
     }
    ],
    "today": [
     {
-     "k": "UNTR",
-     "nm": "United Tractors",
+     "k": "KIJA",
+     "nm": "KIJA",
      "plan": {
-      "entry": 23900.0,
-      "sl": 22400.0,
-      "tp1": 26150.0,
-      "tp2": 26150.0,
-      "risk": 1500.0,
+      "entry": 108.0,
+      "sl": 92.0,
+      "tp1": 132.0,
+      "tp2": 132.0,
+      "risk": 16.0,
       "days": 10
      }
     },
     {
-     "k": "ICBP",
-     "nm": "Indofood CBP Sukses Makmur",
+     "k": "AKRA",
+     "nm": "AKR Corporindo",
      "plan": {
-      "entry": 6950.0,
-      "sl": 6450.0,
-      "tp1": 7675.0,
-      "tp2": 7675.0,
-      "risk": 500.0,
+      "entry": 1245.0,
+      "sl": 1135.0,
+      "tp1": 1410.0,
+      "tp2": 1410.0,
+      "risk": 110.0,
       "days": 10
      }
     },
     {
-     "k": "PNLF",
-     "nm": "PNLF",
+     "k": "TAPG",
+     "nm": "TAPG",
      "plan": {
-      "entry": 169.0,
-      "sl": 152.0,
-      "tp1": 194.0,
-      "tp2": 194.0,
-      "risk": 17.0,
+      "entry": 1710.0,
+      "sl": 1580.0,
+      "tp1": 1900.0,
+      "tp2": 1900.0,
+      "risk": 130.0,
       "days": 10
      }
     }
    ],
    "trades": [
     {
+     "k": "TAPG",
+     "nm": "TAPG",
+     "sig": "2026-11-23",
+     "status": "menunggu"
+    },
+    {
+     "k": "AKRA",
+     "nm": "AKR Corporindo",
+     "sig": "2026-11-23",
+     "status": "menunggu"
+    },
+    {
+     "k": "KIJA",
+     "nm": "KIJA",
+     "sig": "2026-11-23",
+     "status": "menunggu"
+    },
+    {
      "k": "PNLF",
      "nm": "PNLF",
      "sig": "2026-11-20",
-     "status": "menunggu"
+     "status": "berjalan",
+     "entry_date": "2026-11-23",
+     "fill": 168.0,
+     "tp1_hit": false,
+     "pct": -1.0,
+     "last": 167.0
     },
     {
      "k": "ICBP",
      "nm": "Indofood CBP Sukses Makmur",
      "sig": "2026-11-20",
-     "status": "menunggu"
+     "status": "berjalan",
+     "entry_date": "2026-11-23",
+     "fill": 6950.0,
+     "tp1_hit": false,
+     "pct": -1.12,
+     "last": 6900.0
     },
     {
      "k": "UNTR",
      "nm": "United Tractors",
      "sig": "2026-11-20",
-     "status": "menunggu"
+     "status": "berjalan",
+     "entry_date": "2026-11-23",
+     "fill": 23900.0,
+     "tp1_hit": false,
+     "pct": -3.75,
+     "last": 23100.0
     },
     {
      "k": "BRPT",
@@ -1849,8 +2032,8 @@
      "entry_date": "2026-11-20",
      "fill": 635.0,
      "tp1_hit": false,
-     "pct": -1.97,
-     "last": 625.0
+     "pct": 14.56,
+     "last": 730.0
     },
     {
      "k": "INDY",
@@ -1860,8 +2043,8 @@
      "entry_date": "2026-11-20",
      "fill": 1530.0,
      "tp1_hit": false,
-     "pct": -3.01,
-     "last": 1490.0
+     "pct": 2.87,
+     "last": 1580.0
     },
     {
      "k": "ASII",
@@ -1871,8 +2054,8 @@
      "entry_date": "2026-11-20",
      "fill": 5350.0,
      "tp1_hit": false,
-     "pct": -1.33,
-     "last": 5300.0
+     "pct": 0.53,
+     "last": 5400.0
     },
     {
      "k": "DKFT",
@@ -1882,8 +2065,8 @@
      "entry_date": "2026-11-19",
      "fill": 745.0,
      "tp1_hit": false,
-     "pct": -3.76,
-     "last": 720.0
+     "pct": -4.43,
+     "last": 715.0
     },
     {
      "k": "MBSS",
@@ -1893,8 +2076,8 @@
      "entry_date": "2026-11-19",
      "fill": 3060.0,
      "tp1_hit": false,
-     "pct": -1.71,
-     "last": 3020.0
+     "pct": -3.01,
+     "last": 2980.0
     },
     {
      "k": "ARTO",
@@ -1904,41 +2087,8 @@
      "entry_date": "2026-11-19",
      "fill": 550.0,
      "tp1_hit": false,
-     "pct": -9.49,
-     "last": 500.0
-    },
-    {
-     "k": "BMRI",
-     "nm": "Bank Mandiri",
-     "sig": "2026-11-17",
-     "status": "berjalan",
-     "entry_date": "2026-11-18",
-     "fill": 3960.0,
-     "tp1_hit": false,
-     "pct": -2.17,
-     "last": 3890.0
-    },
-    {
-     "k": "MPMX",
-     "nm": "MPMX",
-     "sig": "2026-11-17",
-     "status": "berjalan",
-     "entry_date": "2026-11-18",
-     "fill": 1065.0,
-     "tp1_hit": false,
-     "pct": 0.07,
-     "last": 1070.0
-    },
-    {
-     "k": "BSDE",
-     "nm": "Bumi Serpong Damai",
-     "sig": "2026-11-17",
-     "status": "berjalan",
-     "entry_date": "2026-11-18",
-     "fill": 482.0,
-     "tp1_hit": false,
-     "pct": -3.72,
-     "last": 466.0
+     "pct": -2.22,
+     "last": 540.0
     }
    ],
    "verdict": "pembanding"
