@@ -2,10 +2,10 @@
  "ready": true,
  "version": 2,
  "period": [
-  "2017-09-12",
-  "2026-11-24"
+  "2017-09-13",
+  "2026-11-25"
  ],
- "split_date": "2023-02-03",
+ "split_date": "2023-02-06",
  "fees": {
   "buy": 0.0015,
   "sell": 0.0025
@@ -95,15 +95,15 @@
    {
     "name": "Tren naik",
     "tinggi": {
-     "n": 1693,
+     "n": 1694,
      "win_rate": 35.4,
      "expectancy": -0.77,
      "profit_factor": 0.77
     },
     "rendah": {
-     "n": 117,
-     "win_rate": 32.5,
-     "expectancy": -1.22,
+     "n": 116,
+     "win_rate": 32.8,
+     "expectancy": -1.19,
      "profit_factor": 0.61
     }
    },

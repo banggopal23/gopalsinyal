@@ -1,15 +1,15 @@
 {
- "generated": "2026-11-24 17:38 WIB",
- "last_data_date": "2026-11-24",
+ "generated": "2026-11-25 17:43 WIB",
+ "last_data_date": "2026-11-25",
  "demo": false,
  "scanned": 382,
- "passed_filter": 23,
+ "passed_filter": 25,
  "min_score": 70,
  "valid_days": 20,
  "stocks": [],
  "market": {
-  "date": "2026-11-24",
-  "close": 5241.6,
+  "date": "2026-11-25",
+  "close": 5197.6,
   "above50": false,
   "above200": false
  }
