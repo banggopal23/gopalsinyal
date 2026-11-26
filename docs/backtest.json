@@ -2,10 +2,10 @@
  "ready": true,
  "version": 2,
  "period": [
-  "2017-09-13",
-  "2026-11-25"
+  "2017-09-14",
+  "2026-11-26"
  ],
- "split_date": "2023-02-06",
+ "split_date": "2023-02-07",
  "fees": {
   "buy": 0.0015,
   "sell": 0.0025
@@ -53,7 +53,7 @@
  },
  "by_threshold": {
   "60": {
-   "n": 1810,
+   "n": 1811,
    "win_rate": 35.2,
    "avg_win": 7.18,
    "avg_loss": -5.14,
@@ -90,12 +90,12 @@
   }
  },
  "diagnosis": {
-  "n": 1810,
+  "n": 1811,
   "komponen": [
    {
     "name": "Tren naik",
     "tinggi": {
-     "n": 1694,
+     "n": 1695,
      "win_rate": 35.4,
      "expectancy": -0.77,
      "profit_factor": 0.77
@@ -110,9 +110,9 @@
    {
     "name": "Akumulasi",
     "tinggi": {
-     "n": 1113,
+     "n": 1114,
      "win_rate": 33.8,
-     "expectancy": -0.94,
+     "expectancy": -0.95,
      "profit_factor": 0.72
     },
     "rendah": {
@@ -131,8 +131,8 @@
      "profit_factor": 1.05
     },
     "rendah": {
-     "n": 1807,
-     "win_rate": 35.3,
+     "n": 1808,
+     "win_rate": 35.2,
      "expectancy": -0.8,
      "profit_factor": 0.76
     }
@@ -140,9 +140,9 @@
    {
     "name": "Dekat support",
     "tinggi": {
-     "n": 1332,
+     "n": 1333,
      "win_rate": 36.1,
-     "expectancy": -0.65,
+     "expectancy": -0.66,
      "profit_factor": 0.8
     },
     "rendah": {
@@ -161,9 +161,9 @@
      "profit_factor": 0.73
     },
     "rendah": {
-     "n": 1116,
+     "n": 1117,
      "win_rate": 35.1,
-     "expectancy": -0.74,
+     "expectancy": -0.75,
      "profit_factor": 0.78
     }
    },
@@ -176,9 +176,9 @@
      "profit_factor": 0.76
     },
     "rendah": {
-     "n": 242,
-     "win_rate": 35.1,
-     "expectancy": -0.77,
+     "n": 243,
+     "win_rate": 35.0,
+     "expectancy": -0.79,
      "profit_factor": 0.78
     }
    }
@@ -200,19 +200,19 @@
    },
    {
     "label": "SL lebar (di atas 5%)",
-    "n": 1047,
+    "n": 1048,
     "win_rate": 34.2,
-    "expectancy": -0.97,
+    "expectancy": -0.98,
     "profit_factor": 0.74
    }
   ],
   "pasar": [
    {
     "label": "Pasar lemah (<40% saham di atas EMA 50)",
-    "n": 748,
-    "win_rate": 36.5,
-    "expectancy": -0.65,
-    "profit_factor": 0.8
+    "n": 749,
+    "win_rate": 36.4,
+    "expectancy": -0.66,
+    "profit_factor": 0.79
    },
    {
     "label": "Pasar sedang (40-60%)",
@@ -295,10 +295,10 @@
    },
    {
     "label": "2026",
-    "n": 104,
-    "win_rate": 28.8,
-    "expectancy": -2.1,
-    "profit_factor": 0.51
+    "n": 105,
+    "win_rate": 28.6,
+    "expectancy": -2.14,
+    "profit_factor": 0.5
    }
   ],
   "hasil": [
@@ -316,9 +316,9 @@
    },
    {
     "label": "SL",
-    "n": 1022,
+    "n": 1023,
     "share": 56.5,
-    "avg": -5.58
+    "avg": -5.59
    },
    {
     "label": "Kedaluwarsa",
